@@ -18,12 +18,18 @@
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store   = true;
+      download-buffer-size = 524288000; # 500 MiB
     };
 
     nix.gc = {
       automatic = true;
       dates     = "weekly";
       options   = "--delete-older-than 30d";
+    };
+
+    nix.optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
     };
 
     time.timeZone = "Africa/Johannesburg";

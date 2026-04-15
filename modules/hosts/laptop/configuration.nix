@@ -1,0 +1,49 @@
+{ self, inputs, ... }: {
+
+  flake.nixosModules.laptop = { pkgs, lib, ... }: {
+    imports = [
+      self.nixosModules.laptopHardware
+      self.nixosModules.base
+      self.nixosModules.chezmoi
+      self.nixosModules.firefox
+      self.nixosModules.lxqt
+    ];
+
+    boot.loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+      };
+    };
+
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    networking.hostName = "laptop"; # Define your hostname.
+
+    # Enable networking
+    networking.networkmanager.enable = true;
+
+    # Configure keymap in X11
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
+
+    # Enable CUPS to print documents.
+    services.printing.enable = true;
+
+    # Enable sound with pipewire.
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+  };
+}

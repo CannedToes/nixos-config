@@ -19,13 +19,9 @@
 
       wslConf.interop.enabled = true;
 
-      wrapBinSh = true;
-
       wslConf.automount.options = "metadata,uid=1000,gid=1000";
 
       startMenuLaunchers = true;
-
-      ssh-agent.enable = true;
     };
 
   };

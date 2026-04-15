@@ -1,8 +1,8 @@
 { self, inputs, ... }: {
 
-  flake.nixosConfigurations.template = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.hyperv = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      self.nixosModules.template
+      self.nixosModules.hyperv
     ];
   };
 

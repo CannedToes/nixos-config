@@ -2,13 +2,6 @@
 
   flake.nixosModules.basePackages = { pkgs, lib, ... }: {
     environment.systemPackages = with pkgs; [
-      tmux
-      rippkgs
-      fastfetch
-      wget
-      curl
-      dust
-      git
     ];
   };
 

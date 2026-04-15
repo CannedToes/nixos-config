@@ -3,17 +3,9 @@
   flake.nixosModules.base = { pkgs, lib, ... }: {
     imports = [
       self.nixosModules.basePackages
-      self.nixosModules.chezmoi
     ];
 
     programs.zsh.enable = true;
-
-    users.users.myles = {
-      isNormalUser = true;
-      description = "Myles Glanville";
-      extraGroups = [ "networkmanager" "wheel" ];
-      shell = pkgs.zsh;
-    };
 
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];

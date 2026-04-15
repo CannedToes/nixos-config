@@ -4,6 +4,7 @@
     imports = [
       inputs.nixos-wsl.nixosModules.default
       self.nixosModules.base
+      self.nixosModules.myles
     ];
 
     networking.hostName = "wsl";

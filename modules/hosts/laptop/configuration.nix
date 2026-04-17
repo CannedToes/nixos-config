@@ -4,11 +4,12 @@
     imports = [
       self.nixosModules.laptopHardware
       self.nixosModules.base
-      self.nixosModules.chezmoi
+      self.nixosModules.myles
       self.nixosModules.firefox
       self.nixosModules.lxqt
     ];
 
+    boot.plymouth.enable = true;
     boot.loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -17,6 +18,7 @@
       grub = {
         efiSupport = true;
         device = "nodev";
+        useOSProber = true;
       };
     };
 

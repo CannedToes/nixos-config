@@ -3,6 +3,7 @@
   flake.nixosModules.myles = { pkgs, lib, ... }: {
     imports = [
       self.nixosModules.mylesPackages
+      self.nixosModules.chezmoi
     ];
 
     users.users.myles = {

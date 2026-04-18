@@ -5,6 +5,7 @@
       self.nixosModules.laptopHardware
       self.nixosModules.base
       self.nixosModules.myles
+      self.nixosModules.desktop
       self.nixosModules.firefox
       self.nixosModules.lxqt
     ];

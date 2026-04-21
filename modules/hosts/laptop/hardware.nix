@@ -3,6 +3,15 @@
   flake.nixosModules.laptopHardware = { lib, modulesPath, config, ... }: {
     imports = [
       (modulesPath + "/installer/scan/not-detected.nix")
+
+      # nixos-hardware modules just in case
+      inputs.nixos-hardware.nixosModules.common-cpu-amd
+      inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+      inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+      inputs.nixos-hardware.nixosModules.common-gpu-amd
+
+      inputs.nixos-hardware.nixosModules.common-pc-laptop
+      inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     ];
 
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "sr_mod" ];
@@ -24,7 +33,5 @@
     swapDevices = [ ];
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  };
-
+    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; };
 }

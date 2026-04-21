@@ -25,7 +25,7 @@
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    networking.hostName = "laptop"; # Define your hostname.
+    networking.hostName = "laptop";
 
     # Enable networking
     networking.networkmanager.enable = true;
@@ -33,8 +33,9 @@
     # Configure keymap in X11
     services.xserver.xkb = {
       layout = "us";
-      variant = "";
     };
+
+    console.keyMap = "us";
 
     # Enable CUPS to print documents.
     services.printing.enable = true;

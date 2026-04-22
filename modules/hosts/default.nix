@@ -3,6 +3,7 @@
   flake.nixosModules.base = { pkgs, lib, ... }: {
     imports = [
       self.nixosModules.basePackages
+      inputs.nix-index-database.nixosModules.default
     ];
 
     programs.zsh.enable = true;

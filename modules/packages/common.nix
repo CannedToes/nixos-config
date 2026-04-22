@@ -4,6 +4,7 @@
     environment.systemPackages = with pkgs; [
       tmux
       rippkgs
+      chezmoi
       fastfetch
       wget
       curl

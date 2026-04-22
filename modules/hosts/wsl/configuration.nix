@@ -5,6 +5,7 @@
       inputs.nixos-wsl.nixosModules.default
       self.nixosModules.base
       self.nixosModules.myles
+      self.nixosModules.docker
     ];
 
     networking.hostName = "wsl";
@@ -20,10 +21,11 @@
 
       wslConf.interop.enabled = true;
 
-      wslConf.automount.options = "metadata,uid=1000,gid=1000";
+      wslConf.automount.options = "metadata,uid=1000,gid=100";
+
+      docker-desktop.enable = false;
 
       startMenuLaunchers = true;
     };
-
   };
 }

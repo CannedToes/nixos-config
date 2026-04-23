@@ -10,6 +10,7 @@
       curl
       dust
       git
+      nixfmt
     ];
   };
 

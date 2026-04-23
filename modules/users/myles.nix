@@ -9,7 +9,7 @@
     users.users.myles = {
       isNormalUser = true;
       description = "Myles Glanville";
-      extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
       shell = pkgs.zsh;
     };
   };

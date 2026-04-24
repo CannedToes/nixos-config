@@ -6,15 +6,24 @@
     ];
 
     users.users.myles.packages = with pkgs; [
-      luajitPackages.tree-sitter-cli
-      gcc
+      alejandra
+      bat
       cargo
+      chezmoi
+      dust
+      fd
+      fzf
+      gcc
+      gh
+      helix
+      jq
+      kakoune
+      luajitPackages.tree-sitter-cli
       neovim
       ripgrep
-      fzf
-      fd
-      bat
-      gh
+      sops
+      tmux
+      vis
     ];
   };
 

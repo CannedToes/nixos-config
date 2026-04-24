@@ -3,8 +3,10 @@
   flake.nixosModules.wsl = { pkgs, lib, ... }: {
     imports = [
       inputs.nixos-wsl.nixosModules.default
+      inputs.sops-nix.nixosModules.sops
       self.nixosModules.base
       self.nixosModules.myles
+      self.nixosModules.binaryCache
     ];
 
     networking.hostName = "wsl";

@@ -29,14 +29,15 @@
     arion.url = "github:hercules-ci/arion";
     arion.inputs.nixpkgs.follows = "nixpkgs";
 
+    # these are some miscellaneous wrapper modules that can be used to configure some programs without home manager so it is user agnostic (i think)
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrapper-modules.inputs.nixpkgs.follows = "nixpkgs";
+
     # flake parts is basically just a schema for flake modules so they are more standardized and easier to take care of
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # import tree just lets you import a whole directory recursively (tree) of nix files, check the outputs of this flake to see how it is used
     import-tree.url = "github:vic/import-tree";
-
-    # these are some miscellaneous wrapper modules that can be used to configure some programs without home manager so it is user agnostic (i think)
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };
 
   # and here is where you will define where the sources end up and how you can use them

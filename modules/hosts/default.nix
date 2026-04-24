@@ -3,7 +3,6 @@
   flake.nixosModules.base = { pkgs, lib, ... }: {
     imports = [
       self.nixosModules.basePackages
-      inputs.nix-index-database.nixosModules.default
     ];
 
     programs.zsh.enable = true;
@@ -12,18 +11,24 @@
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store   = true;
       download-buffer-size = 524288000; # 500 MiB
+
+      extra-substituters = [
+        "http://mylesdesktop:5000"
+      ];
+
+      extra-trusted-public-keys = [
+        "cache.wsl.local:EGWy7o70ndO2jBDFnfhLU+nJlAqleqs7rP3HFEzim/k="
+      ];
+
     };
 
     nix.gc = {
       automatic = true;
       dates     = "weekly";
-      options   = "--delete-older-than 30d";
+      options   = "--delete-older-than 7d";
     };
 
-    nix.optimise = {
-      automatic = true;
-      dates = [ "weekly" ];
-    };
+    services.openssh.enable = true;
 
     time.timeZone = "Africa/Johannesburg";
     i18n.defaultLocale = "en_ZA.UTF-8";

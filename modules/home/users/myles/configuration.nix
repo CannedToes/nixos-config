@@ -1,18 +1,21 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.myles = { pkgs, lib, ... }: {
+  flake.nixosModules.mylesConfig = { pkgs, lib, ... }: {
     imports = [
       inputs.nix-index-database.nixosModules.default
-      self.nixosModules.mylesPackages
-      self.nixosModules.chezmoi
     ];
 
+    programs.zsh.enable = true;
     users.users.myles = {
       isNormalUser = true;
       description = "Myles Glanville";
-      extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
+      extraGroups = [ "networkmanager" "wheel" "audio" "video" "media" ];
+      openssh.authorizedKeys.keys = [
+      	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPi8iWjLYelkdtAxwtkyitDtnrZNGM6qxa68aN7svZBk myles@wsl"
+      ];
       shell = pkgs.zsh;
     };
+    users.groups.media = { };
 
     environment.sessionVariables = {
       EDITOR = "nvim";

@@ -3,11 +3,18 @@
   inputs = {
     # the root of all nix
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # all jokes aside here is the current most recent stable branch (kind of useless because of flakes IMO)
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11"
+
+    # flake parts is basically just a schema for flake modules so they are more standardized and easier to take care of (this is commonly called the "dendritic" structure)
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    # import tree just lets you import a whole directory recursively (tree) of nix files, check the outputs of this flake to see how it is used
+    import-tree.url = "github:vic/import-tree";
 
     # an official nixos repository that contains some qol modules you can import for specific hardware and the quirks that the hardware scan didn't pick up
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # this lets you declare all of your disk configuration/partition layout in your nixos config
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # WSL compatability module for NixOS (just for me since i'm a stinky gamer who uses windows but still need nix functionality on it)
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
@@ -25,19 +32,9 @@
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Container composer for running services and orchestrating/creating your own nix based containers that integrate with nixos
-    arion.url = "github:hercules-ci/arion";
-    arion.inputs.nixpkgs.follows = "nixpkgs";
-
     # these are some miscellaneous wrapper modules that can be used to configure some programs without home manager so it is user agnostic (i think)
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
     wrapper-modules.inputs.nixpkgs.follows = "nixpkgs";
-
-    # flake parts is basically just a schema for flake modules so they are more standardized and easier to take care of
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # import tree just lets you import a whole directory recursively (tree) of nix files, check the outputs of this flake to see how it is used
-    import-tree.url = "github:vic/import-tree";
   };
 
   # and here is where you will define where the sources end up and how you can use them

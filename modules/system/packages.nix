@@ -1,8 +1,8 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.basePackages = { pkgs, lib, ... }: {
+  # these are packages that you want on every host
+  flake.nixosModules.systemPackages = { lib, pkgs, ... }: {
     environment.systemPackages = with pkgs; [
-      cachix
       curl
       fastfetch
       git

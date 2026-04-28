@@ -2,14 +2,23 @@
 
   flake.nixosModules.wsl = { pkgs, lib, ... }: {
     imports = [
+      # global
+      self.nixosModules.system
+
+      # host specific
       inputs.nixos-wsl.nixosModules.default
       inputs.sops-nix.nixosModules.sops
-      self.nixosModules.base
+      self.nixosModules.wslPackages
+
+      # user specific
       self.nixosModules.myles
-      self.nixosModules.binaryCache
     ];
 
     networking.hostName = "wsl";
+
+    environment.variables = {
+      BROWSER = "explorer.exe";
+    };
 
     wsl = {
       enable = true;

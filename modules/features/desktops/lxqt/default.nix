@@ -1,6 +1,9 @@
 { self, inputs, ... }: {
 
   flake.nixosModules.lxqt = { pkgs, lib, config, ... }: {
+    imports = [
+      self.nixosModules.desktop
+    ];
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;

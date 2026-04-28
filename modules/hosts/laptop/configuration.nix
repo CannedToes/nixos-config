@@ -2,22 +2,17 @@
 
   flake.nixosModules.laptop = { pkgs, lib, ... }: {
     imports = [
+      # global
+      self.nixosModules.system
+
+      # host specific
       self.nixosModules.laptopHardware
-      self.nixosModules.base
+
+      # user specific
       self.nixosModules.myles
-      self.nixosModules.desktop
       self.nixosModules.firefox
       self.nixosModules.lxqt
     ];
-
-    nix.settings.post-build-hook =
-    ''
-      set -eu
-      set -f # disable globbing
-      export IFS=' '
-      echo "Uploading paths" $OUT_PATHS
-      exec nix copy --to 'http://mylesdesktop:5000' $OUT_PATHS
-    '';
 
     boot.plymouth.enable = true;
     boot.loader = {
@@ -38,8 +33,6 @@
 
     # Enable networking
     networking.networkmanager.enable = true;
-
-    services.tailscale.enable = true;
 
     # Configure keymap in X11
     services.xserver.xkb = {

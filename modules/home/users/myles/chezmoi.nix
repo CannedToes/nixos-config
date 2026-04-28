@@ -1,6 +1,6 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.chezmoi = { pkgs, lib, ... }: {
+  flake.nixosModules.mylesChezmoi = { pkgs, lib, ... }: {
 
     # DO NOT USE THIS MODULE UNLESS YOU ARE ME!!! (or edit it)
     system.activationScripts.dotfiles = {

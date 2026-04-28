@@ -4,7 +4,7 @@
     imports = [
       self.nixosModules.systemConfiguration
       self.nixosModules.systemPackages
-      # self.nixosModules.systemStorage
+      self.nixosModules.systemSops
     ];
   };
 

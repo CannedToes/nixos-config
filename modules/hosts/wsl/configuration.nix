@@ -7,7 +7,6 @@
 
       # host specific
       inputs.nixos-wsl.nixosModules.default
-      inputs.sops-nix.nixosModules.sops
       self.nixosModules.wslPackages
 
       # user specific
@@ -15,10 +14,6 @@
     ];
 
     networking.hostName = "wsl";
-
-    environment.variables = {
-      BROWSER = "explorer.exe";
-    };
 
     wsl = {
       enable = true;

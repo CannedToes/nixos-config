@@ -14,7 +14,6 @@
       fd
       fzf
       gcc
-      gh
       helix
       jq
       kakoune

@@ -13,7 +13,11 @@
       options   = "--delete-older-than 7d";
     };
 
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+      settings.KbdInteractiveAuthentication = false;
+    };
 
     time.timeZone = "Africa/Johannesburg";
     i18n.defaultLocale = "en_ZA.UTF-8";

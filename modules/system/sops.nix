@@ -11,12 +11,14 @@
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # the path to your age key that is expected to already be in the filesystem
-    sops.age.keyFile = "/var/lib/sops/age/keys.txt";
+    sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
     # this will generate a new key if the key specified above does not exist
     sops.age.generateKey = true;
 
-    sops.secrets.cloudflare_ddclient = {};
-    sops.secrets.cloudflare_acme = {};
+    # the specifications for all your secrets
+    sops.secrets."acme/cloudflare" = {};
+    sops.secrets."ddclient/cloudflare" = {};
+    sops.secrets."myles/password" = {};
   };
 }

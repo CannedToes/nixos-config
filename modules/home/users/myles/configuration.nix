@@ -19,12 +19,14 @@
       ];
       shell = pkgs.zsh;
     };
-    users.groups.media = { };
+
+    users.groups.media = {
+      gid = 997;
+    };
 
     environment.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      MANPAGER = "nvim +Man!";
     };
 
     programs.direnv = {

@@ -18,7 +18,12 @@
 
     # the specifications for all your secrets
     sops.secrets."acme/cloudflare" = {};
+
     sops.secrets."ddclient/cloudflare" = {};
+
     sops.secrets."myles/password" = {};
+
+    sops.secrets."navidrome/lastfm/apikey" = {};
+    sops.secrets."navidrome/lastfm/secret" = {};
   };
 }

@@ -14,10 +14,10 @@
       enable = true;
       openFirewall = true; # opens port 4533 for navidrome server to be accessed over lan
       settings = {
+        Address = "0.0.0.0";
         EnableInsightsCollector = true;
 
         MusicFolder = "/srv/storage/media/music";
-        DataFolder = "/srv/data/navidrome/data";
 
         BaseUrl = "https://navidrome.myles.onl";
 
@@ -33,25 +33,6 @@
 
         Plugins.Enabled = true;
         Plugins.AutoReload = true;
-        Plugins.Folder = "/srv/data/navidrome/plugins/";
-      };
-    };
-
-    # make sure that navidrome exists and is of the correct permissions
-    systemd.tmpfiles.settings = {
-      "10-navidrome" = {
-        "${config.services.navidrome.settings.DataFolder}" = {
-          d = {
-            mode = "0770";
-            user = "navidrome";
-            group = "navidrome";
-          };
-          Z = {
-            mode = "0770";
-            user = "navidrome";
-            group = "navidrome";
-          };
-        };
       };
     };
 

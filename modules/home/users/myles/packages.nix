@@ -1,9 +1,11 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.mylesPackages = { pkgs, ... }: {
+  flake.nixosModules.mylesPackages = { pkgs, lib, config, ... }: {
     imports = [
       self.nixosModules.fonts
     ];
+
+    nixpkgs.overlays = [ self.overlays.default ];
 
     users.users.myles.packages = with pkgs; [
       alejandra
@@ -12,6 +14,7 @@
       chezmoi
       dust
       fd
+      ffmpeg
       fzf
       gcc
       helix
@@ -23,6 +26,12 @@
       sops
       tmux
       vis
+
+      # bro why does beets have so many dependencies it doesn't install
+      beets
+      bpm-tools
+      chromaprint
+      libsndfile
     ];
   };
 

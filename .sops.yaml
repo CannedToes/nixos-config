@@ -1,10 +1,12 @@
 keys:
-  - &wsl age1k5c7td9tun3y072cz0cp4uheqgw34ahu7dfzvhz64hh6uljzavmsn5cr69
-  - &wsl-myles age10gympvu0dg52ghsm343xmnalv8k4zhjkh00lv5lj98t8tnnu053squuqr7
+  - &wsl age1j6hhgvtcvae7c8p7yss808zgyxzzat2wkm2acxvkd6h6qevx8fgqyunlq0
+  - &wsl_myles age1gqwkam55acpuuur9l8npz9szr52mukpzhee5v5sxz8xae24s0qkqhf2ys3
+  - &server age1fsrx4yeulwv792tz8ahmegjp3c7ga7fr0cw5l26hqd5c4u98quzq0wlthj
 
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
-      - age:
-        - *wsl
-        - *wsl-myles
+    - age:
+      - *wsl
+      - *wsl_myles
+      - *server

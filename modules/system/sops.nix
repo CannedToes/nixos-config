@@ -23,7 +23,6 @@
 
     sops.secrets."myles/password" = {};
 
-    sops.secrets."navidrome/lastfm/apikey" = {};
-    sops.secrets."navidrome/lastfm/secret" = {};
+    sops.secrets.navidrome = {};
   };
 }

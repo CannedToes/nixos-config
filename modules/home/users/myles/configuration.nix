@@ -14,7 +14,7 @@
       description = "Myles Glanville";
       extraGroups = [ "networkmanager" "wheel" "audio" "video" "media" ];
       openssh.authorizedKeys.keys = [
-      	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPi8iWjLYelkdtAxwtkyitDtnrZNGM6qxa68aN7svZBk myles@wsl"
+      	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIU1WdfeFe320nwVimkgjb+b7hDS6NL8Tvx8BdwuTYNn myles@wsl"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBFzo2ose4CPJumPhaubPtXZXNkfrXxbObIuI18Vx/Va myles@desktop"
       ];
       shell = pkgs.zsh;

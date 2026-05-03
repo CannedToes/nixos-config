@@ -13,8 +13,9 @@
     services.navidrome = {
       enable = true;
       openFirewall = true; # opens port 4533 for navidrome server to be accessed over lan
+      environmentFile = config.sops.secrets.navidrome.path;
       settings = {
-        Address = "0.0.0.0";
+        Address = "192.168.1.152";
         EnableInsightsCollector = true;
 
         MusicFolder = "/srv/storage/media/music";
@@ -27,8 +28,6 @@
         Agents = "audiomuseai,lastfm,deezer";
 
         LastFM.Enabled = true;
-        LastFM.ApiKey = "$(cat ${config.sops.secrets."navidrome/lastfm/apikey".path})";
-        LastFM.Secret = "$(cat ${config.sops.secrets."navidrome/lastfm/secret".path})";
         LastFM.Language = "en";
 
         Plugins.Enabled = true;

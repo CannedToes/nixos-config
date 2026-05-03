@@ -29,6 +29,12 @@
       settings.KbdInteractiveAuthentication = false;
     };
 
+    users.users.root = {
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIU1WdfeFe320nwVimkgjb+b7hDS6NL8Tvx8BdwuTYNn myles@wsl"
+      ];
+    };
+
     time.timeZone = "Africa/Johannesburg";
     i18n.defaultLocale = "en_ZA.UTF-8";
 

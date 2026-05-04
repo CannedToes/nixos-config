@@ -35,13 +35,14 @@
     # these are some miscellaneous wrapper modules that can be used to configure some programs without home manager so it is user agnostic (i think)
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
     wrapper-modules.inputs.nixpkgs.follows = "nixpkgs";
+
+    # this tool helps you format all of your nix files to be consistent in a tree
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   # and here is where you will define where the sources end up and how you can use them
   # usually you would define every machine and module it uses and stuff here but dendritic allows us to compartmentalize that into different files under the modules folder
-  outputs = inputs: inputs.flake-parts.lib.mkFlake
-    { inherit inputs; }
-    (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   # the gist of it is you put stuff in and you get stuff out, but the stuff that comes out of-course relies on the stuff that comes in
   # so when you init your config it will freeze all your inputs TO THE COMMIT and save it to the flake.lock file

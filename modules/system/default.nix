@@ -1,11 +1,14 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+{
 
-  flake.nixosModules.system = { lib, pkgs, ... }: {
-    imports = [
-      self.nixosModules.systemConfiguration
-      self.nixosModules.systemPackages
-      self.nixosModules.systemSops
-    ];
-  };
+  flake.nixosModules.system =
+    { lib, pkgs, ... }:
+    {
+      imports = [
+        self.nixosModules.systemConfiguration
+        self.nixosModules.systemPackages
+        self.nixosModules.systemSops
+      ];
+    };
 
 }

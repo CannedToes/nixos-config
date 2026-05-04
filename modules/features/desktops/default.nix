@@ -1,11 +1,16 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+{
 
-  flake.nixosModules.desktop = { pkgs, lib, ... }: {
-    environment.systemPackages = with pkgs; [
-    	feishin
-      alacritty
-      foot
-    ];
-  };
+  flake.nixosModules.desktop =
+    { pkgs, lib, ... }:
+    {
+      environment.systemPackages = with pkgs; [
+        feishin
+        alacritty
+        foot
+      ];
+
+      services.libinput.enable = true;
+    };
 
 }

@@ -1,8 +1,11 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+{
 
-  flake.nixosModules.basePackages = { pkgs, lib, ... }: {
-    environment.systemPackages = with pkgs; [
-    ];
-  };
+  flake.nixosModules.basePackages =
+    { pkgs, lib, ... }:
+    {
+      environment.systemPackages = with pkgs; [
+      ];
+    };
 
 }

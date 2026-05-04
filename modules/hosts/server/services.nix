@@ -1,16 +1,15 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.wslServices =
+  flake.nixosModules.serverServices =
     {
-      pkgs,
       lib,
+      pkgs,
       config,
       ...
     }:
     {
       imports = [
-        # media server
-        self.nixosModules.navidrome
+        self.nixosModules.hass
       ];
     };
 }

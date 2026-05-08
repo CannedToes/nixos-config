@@ -1,44 +1,51 @@
-{ self, inputs, ... }:
 {
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.mylesPackages = {
+    pkgs,
+    lib,
+    config,
+    ...
+  }: {
+    imports = [
+      self.nixosModules.fonts
+    ];
 
-  flake.nixosModules.mylesPackages =
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      imports = [
-        self.nixosModules.fonts
-      ];
+    users.users.myles.packages = with pkgs; [
+      # testing
+      helix
+      kakoune
+      vis
 
-      users.users.myles.packages = with pkgs; [
-        alejandra
-        bat
-        cargo
-        chezmoi
-        dust
-        fd
-        ffmpeg
-        fzf
-        gcc
-        helix
-        jq
-        kakoune
-        luajitPackages.tree-sitter-cli
-        neovim
-        ripgrep
-        sops
-        tmux
-        vis
+      # neovim
+      cargo
+      lua-language-server
+      luajitPackages.tree-sitter-cli
+      neovim
+      nil
+      rust-analyzer
 
-        # bro why does beets have so many dependencies it doesn't install
-        beets
-        bpm-tools
-        chromaprint
-        libsndfile
-      ];
-    };
+      # tools
+      alejandra
+      bat
+      chezmoi
+      dust
+      fd
+      ffmpeg
+      fzf
+      gcc
+      jq
+      ripgrep
+      sops
+      tmux
 
+      # bro why does beets have so many dependencies it doesn't install
+      beets
+      bpm-tools
+      chromaprint
+      libsndfile
+    ];
+  };
 }

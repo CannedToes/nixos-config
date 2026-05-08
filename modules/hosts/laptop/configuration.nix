@@ -1,60 +1,64 @@
-{ self, inputs, ... }:
 {
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.laptop = {
+    pkgs,
+    lib,
+    ...
+  }: {
+    imports = [
+      # global
+      self.nixosModules.system
 
-  flake.nixosModules.laptop =
-    { pkgs, lib, ... }:
-    {
-      imports = [
-        # global
-        self.nixosModules.system
+      # host specific
+      self.nixosModules.laptopHardware
 
-        # host specific
-        self.nixosModules.laptopHardware
+      # user specific
+      self.nixosModules.myles
+      self.nixosModules.firefox
+      self.nixosModules.lxqt
+    ];
 
-        # user specific
-        self.nixosModules.myles
-        self.nixosModules.firefox
-        self.nixosModules.lxqt
-      ];
-
-      boot.plymouth.enable = true;
-      boot.loader = {
-        efi = {
-          canTouchEfiVariables = true;
-          efiSysMountPoint = "/boot";
-        };
-        grub = {
-          efiSupport = true;
-          device = "nodev";
-          useOSProber = true;
-        };
+    boot.plymouth.enable = true;
+    boot.loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
       };
-
-      boot.kernelPackages = pkgs.linuxPackages_latest;
-
-      networking.hostName = "laptop";
-
-      # Enable networking
-      networking.networkmanager.enable = true;
-
-      # Configure keymap in X11
-      services.xserver.xkb = {
-        layout = "us";
-      };
-
-      console.keyMap = "us";
-
-      # Enable CUPS to print documents.
-      services.printing.enable = true;
-
-      # Enable sound with pipewire.
-      security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        jack.enable = true;
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+        useOSProber = true;
       };
     };
+
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    networking.hostName = "laptop";
+
+    # Enable networking
+    networking.networkmanager.enable = true;
+
+    # Configure keymap in X11
+    services.xserver.xkb = {
+      layout = "us";
+    };
+
+    console.keyMap = "us";
+
+    # Enable CUPS to print documents.
+    services.printing.enable = true;
+
+    # Enable sound with pipewire.
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+  };
 }

@@ -1,38 +1,40 @@
-{ self, inputs, ... }:
 {
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.server = {
+    pkgs,
+    lib,
+    ...
+  }: {
+    imports = [
+      # global
+      self.nixosModules.system
 
-  flake.nixosModules.server =
-    { pkgs, lib, ... }:
-    {
-      imports = [
-        # global
-        self.nixosModules.system
+      # host specific
+      self.nixosModules.serverDisko
+      self.nixosModules.serverHardware
+      self.nixosModules.serverServices
 
-        # host specific
-        self.nixosModules.serverDisko
-        self.nixosModules.serverFirewall
-        self.nixosModules.serverHardware
-        self.nixosModules.serverServices
+      # user specific
+      # self.nixosModules.myles
+    ];
 
-        # user specific
-        # self.nixosModules.myles
-      ];
-
-      boot.loader = {
-        efi = {
-          canTouchEfiVariables = true;
-          efiSysMountPoint = "/boot";
-        };
-        grub = {
-          efiSupport = true;
-          device = "nodev";
-          useOSProber = true;
-        };
+    boot.loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
       };
-
-      boot.kernelPackages = pkgs.linuxPackages_latest;
-
-      networking.hostName = "server";
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+        useOSProber = true;
+      };
     };
 
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    networking.hostName = "server";
+  };
 }

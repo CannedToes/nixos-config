@@ -5,12 +5,12 @@
 }: {
   flake.nixosModules.mylesConfig = {
     pkgs,
-    lib,
     config,
     ...
   }: {
     imports = [
       inputs.nix-index-database.nixosModules.default
+      inputs.home-manager.nixosModules.default
     ];
 
     sops.secrets."myles/password".neededForUsers = true;
@@ -35,8 +35,13 @@
       shell = pkgs.zsh;
     };
 
-    users.groups.media = {
-      gid = 997;
+    home-manager.users.myles = {
+      imports = with self.homeModules; [
+        plasma
+      ];
+      home = {
+        stateVersion = "26.05";
+      };
     };
 
     environment.sessionVariables = {
@@ -49,7 +54,5 @@
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
-
-    programs.nix-ld.enable = true;
   };
 }

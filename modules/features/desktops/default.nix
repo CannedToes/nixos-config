@@ -10,8 +10,9 @@
   }: {
     environment.systemPackages = with pkgs; [
       feishin
-      alacritty
-      foot
+      megacmd
+      megasync
+      mpv
     ];
 
     services.libinput.enable = true;

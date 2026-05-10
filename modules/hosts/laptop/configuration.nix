@@ -1,13 +1,5 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosModules.laptop = {
-    pkgs,
-    lib,
-    ...
-  }: {
+{self, ...}: {
+  flake.nixosModules.laptop = {pkgs, ...}: {
     imports = [
       # global
       self.nixosModules.system
@@ -16,9 +8,12 @@
       self.nixosModules.laptopHardware
 
       # user specific
-      self.nixosModules.myles
+      self.nixosModules.bluetooth
       self.nixosModules.firefox
-      self.nixosModules.lxqt
+      self.nixosModules.myles
+      self.nixosModules.pipewire
+      self.nixosModules.printing
+      self.nixosModules.steam
     ];
 
     boot.plymouth.enable = true;
@@ -34,7 +29,12 @@
       };
     };
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_zen;
+
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
 
     networking.hostName = "laptop";
 
@@ -47,18 +47,5 @@
     };
 
     console.keyMap = "us";
-
-    # Enable CUPS to print documents.
-    services.printing.enable = true;
-
-    # Enable sound with pipewire.
-    security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
   };
 }

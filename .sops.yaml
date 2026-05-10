@@ -1,5 +1,6 @@
 keys:
   - &myles age12y9t37jpa0fk25x6g5mpu7lx6nlxe8agayrzxfanz25rdal0xsxs3eg74u
+  - &laptop age1nldfwzjenxu0khac5jnjqzmh30mlyhnuf8q2qyh3g86805tnhy5qafpffp
   - &server age1fsrx4yeulwv792tz8ahmegjp3c7ga7fr0cw5l26hqd5c4u98quzq0wlthj
   - &wsl age1j6hhgvtcvae7c8p7yss808zgyxzzat2wkm2acxvkd6h6qevx8fgqyunlq0
 
@@ -8,5 +9,6 @@ creation_rules:
     key_groups:
     - age:
       - *myles
+      - *laptop
       - *server
       - *wsl

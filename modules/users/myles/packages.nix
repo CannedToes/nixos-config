@@ -16,7 +16,6 @@
     users.users.myles.packages = with pkgs; [
       # testing
       helix
-      kakoune
       vis
 
       # neovim
@@ -37,11 +36,15 @@
       fzf
       gcc
       jq
+      lazygit
+      pandoc
       ripgrep
       sops
+      tinymist
       tmux
+      typst
 
-      # bro why does beets have so many dependencies it doesn't install
+      # bro why does beets have so many dependencies it doesn't install right
       beets
       bpm-tools
       chromaprint

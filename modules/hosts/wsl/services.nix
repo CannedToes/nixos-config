@@ -12,6 +12,7 @@
     imports = [
       # media server
       self.nixosModules.navidrome
+      self.nixosModules.avahi
     ];
   };
 }

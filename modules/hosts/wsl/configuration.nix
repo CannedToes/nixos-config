@@ -5,7 +5,6 @@
 }: {
   flake.nixosModules.wsl = {
     pkgs,
-    lib,
     ...
   }: {
     imports = [
@@ -20,32 +19,21 @@
 
       # user specific
       self.nixosModules.myles
+      self.nixosModules.emacs
     ];
 
-    services.resolved = {
+    networking.hostName = "wsl";
+
+    hardware.graphics = {
       enable = true;
-      settings.Resolve.FallbackDNS = ["8.8.8.8" "149.112.112.112"];
+      enable32Bit = true;
     };
 
     wsl = {
       enable = true;
       defaultUser = "myles";
-
       useWindowsDriver = true;
-
       startMenuLaunchers = true;
-
-      wslConf.boot.systemd = true;
-
-      interop.includePath = false;
-      wslConf.interop.appendWindowsPath = false;
-      wslConf.interop.enabled = true;
-
-      wslConf.automount.enabled = false;
-      wslConf.automount.options = "uid=1000,gid=997,noatime";
-
-      wslConf.network.generateResolvConf = false;
-      wslConf.network.generateHosts = false;
     };
   };
 }

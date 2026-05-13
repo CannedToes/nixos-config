@@ -30,6 +30,7 @@
       alejandra
       bat
       chezmoi
+      delta
       dust
       fd
       ffmpeg

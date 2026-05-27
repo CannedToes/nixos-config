@@ -1,0 +1,22 @@
+{
+  imports = [
+    ./nginx.nix
+    ./avahi.nix
+    ./podman.nix
+    ./navidrome.nix
+    ./sonarr.nix
+    ./radarr.nix
+    ./prowlarr.nix
+    ./recyclarr.nix
+    ./jellyseerr.nix
+    ./plex.nix
+    ./jellyfin.nix
+    ./beets.nix
+    ./qbittorrent.nix
+    ./homeAssistant.nix
+    ./ntfy.nix
+    ./vaultwarden.nix
+    ./ddclient.nix
+    ./crowdsec.nix
+  ];
+}

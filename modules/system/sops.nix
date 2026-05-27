@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   self,
   inputs,
@@ -33,5 +34,21 @@
     sops.secrets."myles/password" = {};
 
     sops.secrets.navidrome = {};
+||||||| (empty tree)
+=======
+# -- SOPS default configuration --
+# Each host sets its own defaultSopsFile pointing to ./secrets.yaml in its host directory.
+# Secret declarations live in the modules that use them (e.g. navidrome.nix declares
+# sops.secrets.navidrome, users.nix declares sops.secrets."myles/password").
+{inputs, ...}: {
+  flake.nixosModules.sops = {...}: {
+    imports = [
+      inputs.sops-nix.nixosModules.sops
+    ];
+
+    sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+    sops.age.generateKey = true;
+>>>>>>> 8a283fc (GINEMINANORMOUS REFACTOR)
   };
 }

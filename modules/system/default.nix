@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   self,
   inputs,
   ...
@@ -14,4 +15,14 @@
       self.nixosModules.systemSops
     ];
   };
+||||||| (empty tree)
+=======
+  imports = [
+    ./locale.nix
+    ./nix.nix
+    ./networking.nix
+    ./sops.nix
+    ./users.nix
+  ];
+>>>>>>> 8a283fc (GINEMINANORMOUS REFACTOR)
 }

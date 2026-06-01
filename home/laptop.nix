@@ -87,7 +87,7 @@
             {
               digitalClock = {
                 calendar.firstDayOfWeek = "sunday";
-                time.format = "12h";
+                time.format = "24h";
               };
             }
           ];
@@ -182,9 +182,6 @@
       };
 
       configFile."kwinrc" = {
-        Tiling.enable = true;
-        Tiling.layout = "tile";
-
         Plugins.krohnkiteEnabled = true;
         Windows = {
           ActiveMouseScreen = false;

@@ -62,12 +62,11 @@
         networking.useDHCP = true;
 
         nix.settings.max-jobs = 4;
-        nix.gc.options = lib.mkForce "--delete-older-than 3d";
       })
     ];
   };
 
-  perSystem = {self', ...}: {
+  perSystem = {...}: {
     packages.server = self.nixosConfigurations.server.config.system.build.toplevel;
     packages.server-vm = self.nixosConfigurations.server.config.system.build.vm;
   };

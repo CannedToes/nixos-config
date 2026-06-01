@@ -1,14 +1,5 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosModules.homeAssistant = {
-    lib,
-    pkgs,
-    config,
-    ...
-  }: {
+{...}: {
+  flake.nixosModules.homeAssistant = {pkgs, ...}: {
     # postgres for home assistant
     services.postgresql = {
       enable = true;

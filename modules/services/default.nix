@@ -1,22 +1,23 @@
 {
   imports = [
-    ./nginx.nix
+    ./audiomuseai.nix
     ./avahi.nix
-    ./podman.nix
-    ./navidrome.nix
-    ./sonarr.nix
-    ./radarr.nix
-    ./prowlarr.nix
-    ./recyclarr.nix
-    ./jellyseerr.nix
-    ./plex.nix
-    ./jellyfin.nix
     ./beets.nix
-    ./qbittorrent.nix
-    ./homeAssistant.nix
-    ./ntfy.nix
-    ./vaultwarden.nix
-    ./ddclient.nix
     ./crowdsec.nix
+    ./ddclient.nix
+    ./homeAssistant.nix
+    ./jellyfin.nix
+    ./jellyseerr.nix
+    ./navidrome.nix
+    ./nginx.nix
+    ./ntfy.nix
+    ./plex.nix
+    ./podman.nix
+    ./prowlarr.nix
+    ./qbittorrent.nix
+    ./radarr.nix
+    ./recyclarr.nix
+    ./sonarr.nix
+    ./vaultwarden.nix
   ];
 }

@@ -1,28 +1,11 @@
-{
-<<<<<<< HEAD
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosModules.system = {
-    lib,
-    pkgs,
-    ...
-  }: {
+{...}: {
+  flake.nixosModules.system = {...}: {
     imports = [
-      self.nixosModules.systemConfiguration
-      self.nixosModules.systemPackages
-      self.nixosModules.systemSops
+      ./locale.nix
+      ./nix.nix
+      ./networking.nix
+      ./sops.nix
+      ./users.nix
     ];
   };
-||||||| (empty tree)
-=======
-  imports = [
-    ./locale.nix
-    ./nix.nix
-    ./networking.nix
-    ./sops.nix
-    ./users.nix
-  ];
->>>>>>> 8a283fc (GINEMINANORMOUS REFACTOR)
 }

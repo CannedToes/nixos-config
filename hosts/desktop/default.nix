@@ -110,7 +110,7 @@
     ];
   };
 
-  perSystem = {self', ...}: {
+  perSystem = {...}: {
     packages.desktop = self.nixosConfigurations.desktop.config.system.build.toplevel;
     packages.desktop-vm = self.nixosConfigurations.desktop.config.system.build.vm;
   };

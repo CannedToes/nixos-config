@@ -10,9 +10,7 @@
 
     modules = with self.nixosModules;
     with inputs.nixos-hardware.nixosModules; [
-      # -- disko disk --
-      # inputs.disko.nixosModules.default
-      # ./disko.nix
+      # -- hardware scan --
       ./hardware.nix
 
       # -- system --
@@ -134,7 +132,7 @@
     ];
   };
 
-  perSystem = {self', ...}: {
+  perSystem = {...}: {
     packages.laptop = self.nixosConfigurations.laptop.config.system.build.toplevel;
     packages.laptop-vm = self.nixosConfigurations.laptop.config.system.build.vm;
   };

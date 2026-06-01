@@ -50,11 +50,5 @@
     };
 
     users.users.qbittorrent.extraGroups = ["media"];
-
-    systemd.services.qbittorrent = {
-      wantedBy = ["multi-user.target"];
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
-    };
   };
 }

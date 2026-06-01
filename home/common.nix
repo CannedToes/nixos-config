@@ -72,6 +72,7 @@
       fd
       hexyl
       jq
+      kakoune
       lazygit
       ripgrep
       tokei
@@ -83,8 +84,9 @@
       typst
 
       # -- encryption --
-      sops
       age
+      sops
+      ssh-to-age
 
       # -- language stuff --
       alejandra

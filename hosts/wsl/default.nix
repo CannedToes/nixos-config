@@ -2,6 +2,7 @@
   self,
   inputs,
   username,
+  lib,
   ...
 }: {
   flake.nixosConfigurations.wsl = inputs.nixpkgs.lib.nixosSystem {
@@ -11,21 +12,32 @@
     modules = with self.nixosModules; [
       # -- system --
       locale
-      nix
       networking
+      nix
       sops
       users
 
       # -- programs --
-      emacs
-      git
       cli
+      git
       neovim
+
+      # -- services --
+      beets
+      jellyfin
+      navidrome
+      plex
+      podman
+      prowlarr
+      qbittorrent
+      radarr
+      recyclarr
+      sonarr
 
       # -- wsl --
       inputs.nixos-wsl.nixosModules.default
 
-      # -- home-manager --
+      # -- home manager --
       {
         home-manager.users.${username} = {
           imports = with self.homeModules; [common];
@@ -43,6 +55,17 @@
           defaultUser = username;
           useWindowsDriver = true;
           startMenuLaunchers = true;
+          wslConf = {
+            automount.enabled = false;
+            interop.appendWindowsPath = true;
+            network.generateResolvConf = false;
+          };
+        };
+
+        nix.settings = {
+          max-jobs = 8;
+          max-substitution-jobs = 8;
+          auto-optimise-store = lib.mkForce false;
         };
 
         hardware.graphics = {
@@ -50,16 +73,34 @@
           enable32Bit = true;
         };
 
+        fileSystems."/mnt/c" = {
+          device = "C:";
+          fsType = "drvfs";
+          options = [
+            "metadata"
+            "uid=1000"
+            "gid=100"
+            "umask=022"
+            "noatime"
+          ];
+        };
+
         fileSystems."/srv/storage" = {
           device = "D:";
           fsType = "drvfs";
-          options = ["uid=1000" "gid=1500" "umask=002" "noatime"];
+          options = [
+            "metadata"
+            "uid=1000"
+            "gid=1500"
+            "umask=002"
+            "noatime"
+          ];
         };
       }
     ];
   };
 
-  perSystem = {self', ...}: {
+  perSystem = {...}: {
     packages.wsl = self.nixosConfigurations.wsl.config.system.build.toplevel;
   };
 }

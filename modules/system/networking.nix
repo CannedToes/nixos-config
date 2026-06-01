@@ -3,13 +3,13 @@
     networking.firewall.enable = true;
     services.resolved = {
       enable = true;
-      settings.Resolve.FallbackDns = [
-        "8.8.8.8#dns.quad9.net"
+      settings.Resolve.FallbackDNS = [
+        "9.9.9.9#dns.quad9.net"
         "1.1.1.1#cloudflare-dns.com"
       ];
     };
     networking.nameservers = [
-      "8.8.8.8"
+      "9.9.9.9"
       "1.1.1.1"
     ];
 

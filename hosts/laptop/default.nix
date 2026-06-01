@@ -104,9 +104,11 @@
 
         networking.hostName = "laptop";
 
-        services.power-profiles-daemon.enable = false;
-        services.tlp.enable = false;
-        services.upower.enable = true;
+        services = {
+          power-profiles-daemon.enable = false;
+          tlp.enable = false;
+          upower.enable = true;
+        };
         environment.variables = {
           VDPAU_DRIVER = "radeonsi";
           LIBVA_DRIVER_NAME = "radeonsi";
@@ -118,9 +120,6 @@
 
         nix.settings.max-jobs = 8;
 
-        # these settings are for me dw abt it lil bruh
-        # if you want to just run the virtual machine in a window on linux run this command
-        # QEMU_OPTIONS="-display gtk" nix run .#laptop-vm
         virtualisation.vmVariant = {
           virtualisation = {
             memorySize = 4096;

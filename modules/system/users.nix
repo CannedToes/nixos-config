@@ -3,12 +3,7 @@
   inputs,
   ...
 }: {
-  flake.nixosModules.users = {
-    pkgs,
-    config,
-    lib,
-    ...
-  }: {
+  flake.nixosModules.users = {pkgs, ...}: {
     imports = [
       inputs.home-manager.nixosModules.default
     ];

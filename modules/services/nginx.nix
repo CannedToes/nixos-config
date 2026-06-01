@@ -22,44 +22,46 @@
         add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
       '';
 
-      virtualHosts."default" = {
-        default = true;
-        serverName = "_";
-        useACMEHost = "myles.onl";
-        forceSSL = true;
-        locations."/" = {return = "404";};
-      };
-
-      virtualHosts."myles.onl" = {
-        useACMEHost = "myles.onl";
-        forceSSL = true;
-        locations."/" = {
-          return = "200 '<html><body>Hello World!</body></html>'";
-          extraConfig = "default_type text/html;";
+      virtualHosts = {
+        "default" = {
+          default = true;
+          serverName = "_";
+          useACMEHost = "myles.onl";
+          forceSSL = true;
+          locations."/" = {return = "404";};
         };
-      };
 
-      virtualHosts."navidrome.myles.onl" = {
-        useACMEHost = "myles.onl";
-        forceSSL = true;
-        extraConfig = ''
-          proxy_buffering off;
-        '';
-        locations."/" = {
-          proxyPass = "http://192.168.1.152:4533";
-          proxyWebsockets = true;
+        "myles.onl" = {
+          useACMEHost = "myles.onl";
+          forceSSL = true;
+          locations."/" = {
+            return = "200 '<html><body>Hello World!</body></html>'";
+            extraConfig = "default_type text/html;";
+          };
         };
-      };
 
-      virtualHosts."jellyfin.myles.onl" = {
-        useACMEHost = "myles.onl";
-        forceSSL = true;
-        extraConfig = ''
-          proxy_buffering off;
-        '';
-        locations."/" = {
-          proxyPass = "http://192.168.1.152:8096";
-          proxyWebsockets = true;
+        "navidrome.myles.onl" = {
+          useACMEHost = "myles.onl";
+          forceSSL = true;
+          extraConfig = ''
+            proxy_buffering off;
+          '';
+          locations."/" = {
+            proxyPass = "http://192.168.1.152:4533";
+            proxyWebsockets = true;
+          };
+        };
+
+        "jellyfin.myles.onl" = {
+          useACMEHost = "myles.onl";
+          forceSSL = true;
+          extraConfig = ''
+            proxy_buffering off;
+          '';
+          locations."/" = {
+            proxyPass = "http://192.168.1.152:8096";
+            proxyWebsockets = true;
+          };
         };
       };
     };

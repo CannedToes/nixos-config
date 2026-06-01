@@ -9,7 +9,7 @@
       protocol = "cloudflare";
       username = "token";
       passwordFile = config.sops.secrets."ddclient/cloudflare".path;
-      domain = "myles.onl";
+      domains = ["myles.onl"];
       zone = "myles.onl";
 
       ssl = true;

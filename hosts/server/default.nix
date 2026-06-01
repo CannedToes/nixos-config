@@ -42,7 +42,7 @@
       }
 
       # -- host config --
-      ({lib, ...}: {
+      ({...}: {
         hardware.facter.reportPath = ./facter.json;
         sops.defaultSopsFile = ./secrets.yaml;
 

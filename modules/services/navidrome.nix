@@ -17,7 +17,6 @@
 
       settings = {
         Address = "0.0.0.0";
-        EnableInsightsCollector = true;
         MusicFolder = "/srv/storage/media/music";
         BaseUrl = "https://navidrome.myles.onl";
         EnableSharing = true;

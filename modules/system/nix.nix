@@ -1,4 +1,4 @@
-{self, ...}: {
+{...}: {
   flake.nixosModules.nix = {...}: {
     nixpkgs.config.allowUnfree = true;
 
@@ -13,10 +13,6 @@
       dates = "daily";
       options = "--delete-older-than 3d";
     };
-
-    nixpkgs.overlays = [
-      self.overlays.navidrome-plugins
-    ];
 
     system.stateVersion = "26.05";
   };

@@ -1,13 +1,12 @@
 {
   imports = [
-    ./audiomuseai.nix
     ./avahi.nix
     ./beets.nix
     ./crowdsec.nix
     ./ddclient.nix
     ./homeAssistant.nix
     ./jellyfin.nix
-    ./jellyseerr.nix
+    ./seerr.nix
     ./navidrome.nix
     ./nginx.nix
     ./ntfy.nix

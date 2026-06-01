@@ -30,7 +30,7 @@
       noctalia
       plasma
       printing
-      steam
+      gaming
 
       # -- programs --
       cli
@@ -66,7 +66,6 @@
       ({pkgs, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
 
-        # Kernel
         nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
         boot = {
           plymouth = {
@@ -94,9 +93,6 @@
 
         networking.hostName = "desktop";
 
-        # these settings are for me dw abt it lil bruh
-        # if you want to just run the virtual machine in a window on linux run this command
-        # QEMU_OPTIONS="-display gtk" nix run .#desktop-vm
         virtualisation.vmVariant = {
           virtualisation = {
             memorySize = 8192;

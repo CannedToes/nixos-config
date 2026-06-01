@@ -10,7 +10,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -70,9 +70,6 @@
       imports = [
         # -- formatting --
         inputs.treefmt-nix.flakeModule
-
-        # -- overlays --
-        ./overlays
 
         # -- modules --
         ./modules/hardware

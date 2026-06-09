@@ -1,19 +1,23 @@
-# -- Fonts: Nerd Fonts, Noto, Liberation, and CJK --
 {...}: {
   flake.nixosModules.fonts = {pkgs, ...}: {
     fonts.packages = with pkgs; [
-      nerd-fonts.fira-code
-      nerd-fonts.noto
-      nerd-fonts.liberation
-      nerd-fonts.hack
-      nerd-fonts.sauce-code-pro
+      atkinson-hyperlegible
+      geist-font
+      ibm-plex
+      liberation_ttf
+      maple-mono.NF
+      monaspace
       nerd-fonts.commit-mono
-      nerd-fonts.space-mono
+      nerd-fonts.hack
       nerd-fonts.jetbrains-mono
+      nerd-fonts.liberation
+      nerd-fonts.noto
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.space-mono
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      liberation_ttf
+      recursive
     ];
   };
 }

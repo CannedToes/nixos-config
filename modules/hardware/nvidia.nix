@@ -1,4 +1,3 @@
-# -- NVIDIA GPU with Wayland and VA-API --
 {...}: {
   flake.nixosModules.nvidia = {
     pkgs,

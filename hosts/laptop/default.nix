@@ -11,7 +11,7 @@
     modules = with self.nixosModules;
     with inputs.nixos-hardware.nixosModules; [
       # -- hardware scan --
-      ./hardware.nix
+      ./_hardware.nix
 
       # -- system --
       locale
@@ -23,15 +23,21 @@
       # -- desktop --
       audio
       bluetooth
+      calculator
       creative
+      desktopPortal
+      fileManager
       firefox
       fonts
       gaming
       media
       netbeans
       networkManager
-      plasma
+      session
+      sway
+      theming
       printing
+      viewers
 
       # -- programs --
       cli
@@ -42,16 +48,6 @@
       # -- services--
       avahi
 
-      # -- home-manager --
-      {
-        home-manager.users.${username} = {
-          imports = with self.homeModules; [
-            common
-            laptop
-          ];
-        };
-      }
-
       # -- host-specific settings --
       ({pkgs, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
@@ -60,7 +56,7 @@
         boot = {
           kernelPackages = pkgs.linuxPackages_zen;
 
-          consoleLogLevel = 0;
+          consoleLogLevel = 3;
           initrd.verbose = false;
 
           plymouth = {
@@ -79,25 +75,27 @@
               efiSupport = true;
               gfxmodeEfi = "1366x768";
               gfxpayloadEfi = "keep";
-              theme = "${pkgs.kdePackages.breeze-grub}/grub/themes/breeze";
               useOSProber = true;
             };
             timeout = 1;
           };
 
           kernelParams = [
-            "amd_pstate=active"
-            "boot.shell_on_fail"
-            "drm_kms_helper.poll=0"
-            "fsck.mode=auto"
-            "fsck.repair=yes"
-            "loglevel=3"
-            "quiet"
-            "rd.systemd.show_status=false"
-            "rd.udev.log_level=3"
-            "splash"
-            "udev.log_priority=3"
-            "vt.global_cursor_default=0"
+						# amd specific
+						"amd_pstate=active"
+
+						# plymouth/"quiet" boot
+						"quiet"
+						"splash"
+						"loglevel=3"
+						"rd.systemd.show_status=false"
+						"rd.udev.log_level=3"
+						"udev.log_priority=3"
+						"vt.global_cursor_default=0"
+
+						# filesystem checking
+						"fsck.mode=auto"
+						"fsck.repair=yes"
           ];
           supportedFilesystems = ["ntfs"];
         };
@@ -105,13 +103,24 @@
         networking.hostName = "laptop";
 
         services = {
-          power-profiles-daemon.enable = false;
-          tlp.enable = false;
-          upower.enable = true;
-        };
-        environment.variables = {
-          VDPAU_DRIVER = "radeonsi";
-          LIBVA_DRIVER_NAME = "radeonsi";
+          tlp = {
+            enable = true;
+            settings = {
+              CPU_BOOST_ON_AC = 1;
+              CPU_BOOST_ON_BAT = 0;
+              CPU_DRIVER_OPMODE_ON_AC = "active";
+              CPU_DRIVER_OPMODE_ON_BAT = "active";
+              CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+              CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+              CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+              CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+              RUNTIME_PM_ON_AC = "on";
+              RUNTIME_PM_ON_BAT = "auto";
+              USB_AUTOSUSPEND = 1;
+              WIFI_PWR_ON_AC = "off";
+              WIFI_PWR_ON_BAT = "on";
+            };
+          };
         };
         hardware.graphics = {
           enable = true;

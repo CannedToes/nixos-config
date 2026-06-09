@@ -11,7 +11,7 @@
     modules = with self.nixosModules; [
       # -- disko disk --
       inputs.disko.nixosModules.default
-      ./disko.nix
+      ./_disko.nix
 
       # -- system --
       locale
@@ -29,17 +29,14 @@
       avahi
       ddclient
       homeAssistant
+      kavita
+      movim
       nginx
       ntfy
       podman
+      prosody
+      radicale
       vaultwarden
-
-      # -- home-manager --
-      {
-        home-manager.users.${username} = {
-          imports = with self.homeModules; [common];
-        };
-      }
 
       # -- host config --
       ({...}: {

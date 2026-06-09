@@ -27,8 +27,7 @@
       firefox
       fonts
       media
-      noctalia
-      plasma
+      sway
       printing
       gaming
 
@@ -51,16 +50,6 @@
       # jellyfin
       # beets
       # qbittorrent
-
-      # -- home-manager --
-      {
-        home-manager.users.${username} = {
-          imports = [
-            self.homeModules.common
-            self.homeModules.desktop
-          ];
-        };
-      }
 
       # -- host-specific settings --
       ({pkgs, ...}: {

@@ -37,13 +37,6 @@
       # -- wsl --
       inputs.nixos-wsl.nixosModules.default
 
-      # -- home manager --
-      {
-        home-manager.users.${username} = {
-          imports = with self.homeModules; [common];
-        };
-      }
-
       # -- host configuration --
       {
         sops.defaultSopsFile = ./secrets.yaml;

@@ -9,33 +9,15 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko";
@@ -44,9 +26,13 @@
 
     nixos-facter = {
       url = "github:numtide/nixos-facter";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
@@ -59,39 +45,19 @@
     };
   };
 
-  outputs = inputs @ {flake-parts, ...}:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
+  outputs = inputs: let
+    inherit (inputs.nixpkgs) lib;
+    inherit (lib.fileset) fileFilter toList;
 
-      # username — change this if you adopt this config.
-      # available to all flake-parts modules and passed to NixOS via specialArgs (check all the host definitions in ./hosts)
-      _module.args.username = "myles";
+    isNixModule = file:
+      file.hasExt "nix"
+      && file.name != "flake.nix"
+      && !lib.hasPrefix "_" file.name;
 
-      imports = [
-        # -- formatting --
-        inputs.treefmt-nix.flakeModule
+    importTree = path:
+      toList (fileFilter isNixModule path);
 
-        # -- modules --
-        ./modules/hardware
-        ./modules/system
-        ./modules/desktop
-        ./modules/programs
-        ./modules/services
-
-        # -- home --
-        ./home
-
-        # -- hosts --
-        ./hosts/desktop
-        ./hosts/laptop
-        ./hosts/server
-        ./hosts/wsl
-      ];
-      perSystem = {
-        treefmt = {
-          projectRootFile = "flake.nix";
-          programs.alejandra.enable = true;
-        };
-      };
-    };
+    mkFlake = inputs.flake-parts.lib.mkFlake {inherit inputs;};
+  in
+    mkFlake {imports = importTree ./.;};
 }

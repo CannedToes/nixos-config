@@ -5,6 +5,7 @@
 
   systems = ["x86_64-linux"];
 
+  # change this to change username for whole configuration
   _module.args.username = "myles";
 
   perSystem = {

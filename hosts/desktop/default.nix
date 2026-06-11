@@ -13,6 +13,7 @@
       locale
       nix
       networking
+      persistence
       sops
       users
 

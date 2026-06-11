@@ -5,7 +5,10 @@
     pkgs,
     ...
   }: {
-    sops.secrets."coturn/static-auth-secret" = {};
+    sops.secrets."coturn/static-auth-secret" = {
+      group = "turn-secret";
+      mode = "0440";
+    };
 
     networking.firewall = {
       allowedTCPPorts = [5222 5269 5000 3478 5349];
@@ -168,9 +171,11 @@
       };
     };
 
+    users.groups."turn-secret" = {};
+
     users.users = {
-      prosody.extraGroups = ["nginx"];
-      turnserver.extraGroups = ["nginx"];
+      prosody.extraGroups = ["nginx" "turn-secret"];
+      turnserver.extraGroups = ["nginx" "turn-secret"];
     };
 
     systemd.services.prosody = {

@@ -106,6 +106,27 @@
 
         networking.hostName = "laptop";
 
+				networking.hosts = {
+					"192.168.1.158" = [
+						"myles.onl"
+						"chat.myles.onl"
+						"home.myles.onl"
+						"kavita.myles.onl"
+						"matrix.myles.onl"
+						"element.myles.onl"
+						"ntfy.myles.onl"
+						"radicale.myles.onl"
+						"search.myles.onl"
+						"upload.myles.onl"
+						"vault.myles.onl"
+						"xmpp.myles.onl"
+						"conference.myles.onl"
+						"jellyfin.myles.onl"
+						"navidrome.myles.onl"
+						"turn.myles.onl"
+					];
+				};
+
         services = {
           tlp = {
             enable = true;

@@ -1,5 +1,9 @@
 {...}: {
-  flake.nixosModules.nginx = {config, ...}: {
+  flake.nixosModules.nginx = {
+    config,
+    pkgs,
+    ...
+  }: {
     sops.secrets.acme = {};
 
     networking.firewall.allowedTCPPorts = [80 443];
@@ -12,14 +16,15 @@
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
+      additionalModules = [pkgs.nginxModules.moreheaders];
 
       commonHttpConfig = ''
         access_log /var/log/nginx/access.log;
         error_log /var/log/nginx/error.log;
-        add_header X-Content-Type-Options "nosniff";
-        add_header X-XSS-Protection "1; mode=block";
-        add_header Referrer-Policy "strict-origin-when-cross-origin";
-        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+        more_set_headers "X-Content-Type-Options: nosniff";
+        more_set_headers "X-XSS-Protection: 1; mode=block";
+        more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+        more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
       '';
 
       virtualHosts = {

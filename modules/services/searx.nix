@@ -13,7 +13,7 @@
 
           general = {
             debug = false;
-            instance_name = "Myles Search";
+            instance_name = "myles.onl";
             enable_metrics = false;
           };
 

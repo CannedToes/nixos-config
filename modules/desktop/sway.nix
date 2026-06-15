@@ -33,6 +33,7 @@
       };
 
       systemPackages = with pkgs; [
+				waybar
         brightnessctl
         foot
         fuzzel

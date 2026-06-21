@@ -1,13 +1,11 @@
 {
   self,
   inputs,
-  username,
   lib,
   ...
 }: {
   flake.nixosConfigurations.wsl = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs username;};
 
     modules = with self.nixosModules; [
       # -- system --
@@ -18,16 +16,16 @@
       users
 
       # -- programs --
+      beets
       cli
       git
       neovim
 
       # -- services --
-      beets
       jellyfin
+      lidarr
       navidrome
       plex
-      podman
       prowlarr
       qbittorrent
       radarr
@@ -41,24 +39,39 @@
       {
         sops.defaultSopsFile = ./secrets.yaml;
 
-        networking.hostName = "wsl";
+        networking = {
+          hostName = "wsl";
+
+          enableIPv6 = false;
+          nameservers = lib.mkForce [];
+        };
+
+        services.resolved.enable = lib.mkForce false;
+
+        systemd.services.navidrome.serviceConfig.BindReadOnlyPaths = [
+          "/mnt/wsl/resolv.conf:/mnt/wsl/resolv.conf"
+        ];
 
         wsl = {
           enable = true;
-          defaultUser = username;
+          defaultUser = "myles";
           useWindowsDriver = true;
           startMenuLaunchers = true;
           wslConf = {
             automount.enabled = false;
             interop.appendWindowsPath = true;
-            network.generateResolvConf = false;
+            network.generateResolvConf = true;
           };
         };
 
         nix.settings = {
           max-jobs = 8;
-          max-substitution-jobs = 8;
+          max-substitution-jobs = 4;
           auto-optimise-store = lib.mkForce false;
+          connect-timeout = 30;
+          download-attempts = 8;
+          http-connections = 10;
+          stalled-download-timeout = 180;
         };
 
         hardware.graphics = {

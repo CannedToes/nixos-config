@@ -1,24 +1,22 @@
 {
   self,
   inputs,
-  username,
   ...
 }: {
   flake.nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs username;};
 
     modules = with self.nixosModules; [
       # -- system --
       locale
-      nix
       networking
+      nix
       sops
       users
 
       # -- hardware --
-      nvidia
       amd
+      nvidia
 
       # -- desktop --
       audio
@@ -26,12 +24,13 @@
       creative
       firefox
       fonts
-      media
-      sway
-      printing
       gaming
+      media
+      printing
+      sway
 
       # -- programs --
+      beets
       cli
       emacs
       git
@@ -39,17 +38,15 @@
 
       # -- services --
       # avahi
-      # podman
-      # navidrome
-      # sonarr
-      # radarr
-      # prowlarr
-      # recyclarr
-      # jellyseerr
-      # plex
       # jellyfin
-      # beets
+      # jellyseerr
+      # navidrome
+      # plex
+      # prowlarr
       # qbittorrent
+      # radarr
+      # recyclarr
+      # sonarr
 
       # -- host-specific settings --
       ({pkgs, ...}: {

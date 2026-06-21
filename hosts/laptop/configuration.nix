@@ -1,17 +1,15 @@
 {
   self,
   inputs,
-  username,
   ...
 }: {
   flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs username;};
 
     modules = with self.nixosModules;
     with inputs.nixos-hardware.nixosModules; [
       # -- hardware scan --
-      ./_hardware.nix
+      ./_hardware-configuration.nix
 
       # -- system --
       locale
@@ -49,7 +47,10 @@
       avahi
 
       # -- host-specific settings --
-      ({pkgs, ...}: {
+      ({
+        pkgs,
+        ...
+      }: {
         sops.defaultSopsFile = ./secrets.yaml;
         hardware.facter.reportPath = ./facter.json;
 
@@ -61,7 +62,6 @@
 
           plymouth = {
             enable = true;
-            theme = "breeze";
           };
 
           loader = {
@@ -81,21 +81,21 @@
           };
 
           kernelParams = [
-						# amd specific
-						"amd_pstate=active"
+            # amd specific
+            "amd_pstate=active"
 
-						# plymouth/"quiet" boot
-						"quiet"
-						"splash"
-						"loglevel=3"
-						"rd.systemd.show_status=false"
-						"rd.udev.log_level=3"
-						"udev.log_priority=3"
-						"vt.global_cursor_default=0"
+            # plymouth/"quiet" boot
+            "quiet"
+            "splash"
+            "loglevel=3"
+            "rd.systemd.show_status=false"
+            "rd.udev.log_level=3"
+            "udev.log_priority=3"
+            "vt.global_cursor_default=0"
 
-						# filesystem checking
-						"fsck.mode=auto"
-						"fsck.repair=yes"
+            # filesystem checking
+            "fsck.mode=auto"
+            "fsck.repair=yes"
           ];
           supportedFilesystems = ["ntfs"];
         };
@@ -122,6 +122,7 @@
             };
           };
         };
+
         hardware.graphics = {
           enable = true;
           enable32Bit = true;
@@ -130,10 +131,26 @@
         nix.settings.max-jobs = 8;
 
         virtualisation.vmVariant = {
+          services.spice-vdagentd.enable = true;
+
           virtualisation = {
+            diskImage = "./laptop-impermanence.qcow2";
             memorySize = 4096;
             cores = 4;
-            qemu.options = ["-display" "vnc=:0"];
+            qemu.options = [
+              "-spice"
+              "addr=127.0.0.1,port=5930,disable-ticketing=on"
+
+              "-vga"
+              "qxl"
+
+              "-device"
+              "virtio-serial-pci"
+              "-chardev"
+              "spicevmc,id=spicechannel0,name=vdagent"
+              "-device"
+              "virtserialport,chardev=spicechannel0,name=com.redhat.spice.0"
+            ];
           };
         };
       })

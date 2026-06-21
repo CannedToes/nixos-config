@@ -1,8 +1,8 @@
-{username, ...}: {
+{...}: {
   flake.nixosModules.users = {pkgs, ...}: {
     users.groups.media.gid = 1500;
 
-    users.users.${username} = {
+    users.users.myles = {
       isNormalUser = true;
       initialPassword = "changeme";
       description = "Myles Glanville";

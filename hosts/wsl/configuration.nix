@@ -12,7 +12,6 @@
       locale
       networking
       nix
-      persistence
       sops
       users
 

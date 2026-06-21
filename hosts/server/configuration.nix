@@ -15,6 +15,7 @@
       locale
       nix
       networking
+      persistence
       sops
 
       # -- services --
@@ -47,21 +48,12 @@
           hosts = {
             "127.0.0.1" = [
               "myles.onl"
-              "chat.myles.onl"
               "home.myles.onl"
-              "kavita.myles.onl"
-              "matrix.myles.onl"
-              "element.myles.onl"
               "ntfy.myles.onl"
-              "radicale.myles.onl"
               "search.myles.onl"
-              "upload.myles.onl"
               "vault.myles.onl"
-              "xmpp.myles.onl"
-              "conference.myles.onl"
               "jellyfin.myles.onl"
               "navidrome.myles.onl"
-              "turn.myles.onl"
             ];
           };
 

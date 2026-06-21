@@ -15,6 +15,7 @@
       locale
       networking
       nix
+      persistence
       sops
       users
 
@@ -101,6 +102,18 @@
         };
 
         networking.hostName = "laptop";
+
+				networking.hosts = {
+					"192.168.1.158" = [
+						"myles.onl"
+						"home.myles.onl"
+						"ntfy.myles.onl"
+						"search.myles.onl"
+						"vault.myles.onl"
+						"jellyfin.myles.onl"
+						"navidrome.myles.onl"
+					];
+				};
 
         services = {
           tlp = {

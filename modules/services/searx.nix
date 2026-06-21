@@ -21,11 +21,9 @@
 
         server = {
           secret_key = "$SECRET_KEY";
-
           public_instance = true;
           limiter = true;
           image_proxy = true;
-
           method = "GET";
         };
 

@@ -1,12 +1,11 @@
-{ inputs, ... }: {
-  flake.nixosModules.nixarr = { ... }: {
+{inputs, ...}: {
+  flake.nixosModules.nixarr = {...}: {
     imports = [
       inputs.nixarr.nixosModules.default
     ];
 
     nixarr = {
       enable = true;
-      exporters.enable = true;
 
       mediaDir = "/srv/storage/nixarr";
       stateDir = "/var/lib/nixarr";
@@ -117,46 +116,70 @@
         };
       };
 
-			qbittorrent = {
-				enable = true;
-				openFirewall = true;
+      qbittorrent = {
+        enable = true;
+        openFirewall = true;
 
-				qui.enable = true;
+        qui.enable = true;
 
-				peerPort = 5085;
-				webuiPort = 8080;
+        peerPort = 5085;
+        webuiPort = 8080;
 
-				extraConfig = {
-					BitTorrent = {
-						"Session\\BTProtocol" = "TCP";
-						"Session\\DefaultSavePath" = "/srv/storage/nixarr/qbittorrent";
-						"Session\\GlobalDLSpeedLimit" = 98304;
-						"Session\\GlobalUPSpeedLimit" = 73728;
-						"Session\\Preallocation" = true;
+        extraConfig = {
+          BitTorrent = {
+            "Session\\BTProtocol" = 1;
+            "Session\\DefaultSavePath" = "/srv/storage/nixarr/qbittorrent";
+            "Session\\Encryption" = 0;
+            "Session\\TempPath" = "/var/lib/nixarr/qbittorrent/incomplete";
+            "Session\\TempPathEnabled" = true;
+            "Session\\GlobalDLSpeedLimit" = 92160;
+            "Session\\GlobalUPSpeedLimit" = 46080;
+            "Session\\AlternativeGlobalDLSpeedLimit" = 122880;
+            "Session\\AlternativeGlobalUPSpeedLimit" = 61440;
+            "Session\\UseAlternativeGlobalSpeedLimit" = false;
+            "Session\\Preallocation" = false;
 
-						"Session\\QueueingSystemEnabled" = true;
-						"Session\\MaxActiveDownloads" = 6;
-						"Session\\MaxActiveUploads" = 20;
-						"Session\\MaxActiveTorrents" = 40;
+            "Session\\AsyncIOThreadsCount" = 16;
+            "Session\\CheckingMemUsageSize" = 512;
+            "Session\\CoalesceReadWrite" = true;
+            "Session\\DiskCacheSize" = 512;
+            "Session\\DiskCacheTTL" = 120;
+            "Session\\DiskQueueSize" = 4194304;
+            "Session\\HashingThreadsCount" = 2;
 
-						"Session\\IgnoreSlowTorrentsForQueueing" = true;
-						"Session\\SlowTorrentsDownloadRate" = 256;
-						"Session\\SlowTorrentsUploadRate" = 5;
-						"Session\\SlowTorrentsInactivityTimer" = 300;
+            "Session\\QueueingSystemEnabled" = true;
+            "Session\\MaxActiveDownloads" = 4;
+            "Session\\MaxActiveUploads" = 8;
+            "Session\\MaxActiveTorrents" = 16;
 
-						"Session\\MaxActiveCheckingTorrents" = 1;
+            "Session\\IgnoreSlowTorrentsForQueueing" = true;
+            "Session\\SlowTorrentsDownloadRate" = 256;
+            "Session\\SlowTorrentsUploadRate" = 5;
+            "Session\\SlowTorrentsInactivityTimer" = 300;
 
-						"Session\\DisableAutoTMMByDefault" = false;
-						"Session\\SubcategoriesEnabled" = true;
+            "Session\\MaxActiveCheckingTorrents" = 1;
 
-						"Session\\ExcludedFileNames" = "*.rar\n*.r[0-9]*";
-					};
+            "Session\\DisableAutoTMMByDefault" = false;
+            "Session\\SubcategoriesEnabled" = true;
 
-					Network = {
-						PortForwardingEnabled = true;
-					};
-				};
-			};
+            "Session\\ExcludedFileNames" = "*.rar\n*.r[0-9]*";
+          };
+
+          Preferences = {
+            "Downloads\\PreAllocation" = false;
+            "Downloads\\TempPath" = "/var/lib/nixarr/qbittorrent/incomplete";
+            "Downloads\\TempPathEnabled" = true;
+            "Scheduler\\days" = 0;
+            "Scheduler\\enabled" = true;
+            "Scheduler\\end_time" = "06:00:00";
+            "Scheduler\\start_time" = "00:00:00";
+          };
+
+          Network = {
+            PortForwardingEnabled = true;
+          };
+        };
+      };
 
       recyclarr = {
         enable = true;
@@ -325,5 +348,9 @@
     services.sonarr.settings.auth.required = "DisabledForLocalAddresses";
     services.radarr.settings.auth.required = "DisabledForLocalAddresses";
     services.lidarr.settings.auth.required = "DisabledForLocalAddresses";
+
+    systemd.tmpfiles.rules = [
+      "d /var/lib/nixarr/qbittorrent/incomplete 2775 qbittorrent media - -"
+    ];
   };
 }

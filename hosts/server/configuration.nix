@@ -2,7 +2,9 @@
   self,
   inputs,
   ...
-}: {
+}: let
+  subdomains = import ../../modules/_subdomains.nix;
+in {
   flake.nixosConfigurations.server = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
 
@@ -20,11 +22,9 @@
       # -- services --
       avahi
       ddclient
-      grafana
       homeAssistant
       nginx
       ntfy
-      prometheus
       searx
       vaultwarden
 
@@ -46,18 +46,7 @@
             eth0.useDHCP = false;
           };
 
-          hosts = {
-            "127.0.0.1" = [
-              "myles.onl"
-              "home.myles.onl"
-              "ntfy.myles.onl"
-              "search.myles.onl"
-              "vault.myles.onl"
-              "jellyfin.myles.onl"
-              "navidrome.myles.onl"
-            ];
-          };
-
+          hosts."127.0.0.1" = subdomains;
         };
 
         boot = {

@@ -2,12 +2,15 @@
   self,
   inputs,
   ...
-}: {
+}: let
+  subdomains = import ../../modules/_subdomains.nix;
+in {
   flake.nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
 
     modules = with self.nixosModules; [
       # -- system --
+      boot
       locale
       networking
       nix
@@ -37,16 +40,8 @@
       neovim
 
       # -- services --
-      # avahi
-      # jellyfin
-      # jellyseerr
-      # navidrome
-      # plex
-      # prowlarr
-      # qbittorrent
-      # radarr
-      # recyclarr
-      # sonarr
+      navidrome
+      nixarr
 
       # -- host-specific settings --
       ({pkgs, ...}: {
@@ -54,30 +49,14 @@
 
         nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
         boot = {
-          plymouth = {
-            enable = true;
-            theme = "breeze";
-          };
-
-          loader = {
-            efi.canTouchEfiVariables = true;
-            efi.efiSysMountPoint = "/boot";
-            grub = {
-              enable = true;
-              efiSupport = true;
-              device = "nodev";
-              useOSProber = true;
-              gfxmodeEfi = "1920x1080";
-              gfxpayloadEfi = "keep";
-            };
-          };
-
+          plymouth.theme = "breeze";
+          loader.grub.gfxmodeEfi = "1920x1080";
           kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
           kernelParams = ["quiet" "splash" "nvidia-drm.modeset=1"];
-          supportedFilesystems = ["ntfs"];
         };
 
         networking.hostName = "desktop";
+        networking.hosts."192.168.1.158" = subdomains;
 
         virtualisation.vmVariant = {
           virtualisation = {

@@ -2,7 +2,9 @@
   self,
   inputs,
   ...
-}: {
+}: let
+  subdomains = import ../../modules/_subdomains.nix;
+in {
   flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
 
@@ -12,6 +14,7 @@
       ./_hardware-configuration.nix
 
       # -- system --
+      boot
       locale
       networking
       nix
@@ -43,48 +46,22 @@
       git
       neovim
 
-      # -- services--
+      # -- services --
       avahi
 
       # -- host-specific settings --
-      ({
-        pkgs,
-        ...
-      }: {
+      ({pkgs, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
         hardware.facter.reportPath = ./facter.json;
 
         boot = {
           kernelPackages = pkgs.linuxPackages_zen;
-
           consoleLogLevel = 3;
           initrd.verbose = false;
-
-          plymouth = {
-            enable = true;
-          };
-
-          loader = {
-            efi = {
-              canTouchEfiVariables = true;
-              efiSysMountPoint = "/boot";
-            };
-            grub = {
-              enable = true;
-              device = "nodev";
-              efiSupport = true;
-              gfxmodeEfi = "1366x768";
-              gfxpayloadEfi = "keep";
-              useOSProber = true;
-            };
-            timeout = 1;
-          };
-
+          loader.grub.gfxmodeEfi = "1366x768";
+          loader.timeout = 1;
           kernelParams = [
-            # amd specific
             "amd_pstate=active"
-
-            # plymouth/"quiet" boot
             "quiet"
             "splash"
             "loglevel=3"
@@ -92,27 +69,14 @@
             "rd.udev.log_level=3"
             "udev.log_priority=3"
             "vt.global_cursor_default=0"
-
-            # filesystem checking
             "fsck.mode=auto"
             "fsck.repair=yes"
           ];
-          supportedFilesystems = ["ntfs"];
         };
 
         networking.hostName = "laptop";
 
-				networking.hosts = {
-					"192.168.1.158" = [
-						"myles.onl"
-						"home.myles.onl"
-						"ntfy.myles.onl"
-						"search.myles.onl"
-						"vault.myles.onl"
-						"jellyfin.myles.onl"
-						"navidrome.myles.onl"
-					];
-				};
+        networking.hosts."192.168.1.158" = subdomains;
 
         services = {
           tlp = {

@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.nixosModules.beets = { pkgs, ... }: {
+{...}: {
+  flake.nixosModules.beets = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       beets
       ffmpeg

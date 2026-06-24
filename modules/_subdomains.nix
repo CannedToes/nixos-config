@@ -1,0 +1,9 @@
+[
+  "myles.onl"
+  "home.myles.onl"
+  "ntfy.myles.onl"
+  "search.myles.onl"
+  "vault.myles.onl"
+  "jellyfin.myles.onl"
+  "navidrome.myles.onl"
+]

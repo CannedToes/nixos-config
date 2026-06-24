@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.nixosModules.searx = { config, ... }: {
+{...}: {
+  flake.nixosModules.searx = {config, ...}: {
     sops.secrets.searx = {};
 
     services.searx = {
@@ -32,7 +32,6 @@
         };
 
         search = {
-          # formats = [ "html" ];
           safe_search = 0;
           autocomplete = "duckduckgo";
         };
@@ -49,10 +48,9 @@
 
     services.nginx = {
       virtualHosts."search.myles.onl" = {
-				useACMEHost = "myles.onl";
+        useACMEHost = "myles.onl";
         forceSSL = true;
       };
     };
-
   };
 }

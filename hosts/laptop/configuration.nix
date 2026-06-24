@@ -29,6 +29,7 @@ in {
       desktopPortal
       fileManager
       firefox
+      zen
       fonts
       gaming
       media

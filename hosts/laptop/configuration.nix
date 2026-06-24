@@ -42,6 +42,7 @@ in {
 
       # -- programs --
       cli
+      development
       emacs
       git
       neovim

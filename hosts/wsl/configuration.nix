@@ -18,6 +18,7 @@
       # -- programs --
       beets
       cli
+      development
       git
       neovim
 
@@ -34,21 +35,12 @@
 
         networking = {
           hostName = "wsl";
-
-          enableIPv6 = false;
           nameservers = lib.mkForce [];
         };
-
-        services.resolved.enable = lib.mkForce false;
-
-        systemd.services.navidrome.serviceConfig.BindReadOnlyPaths = [
-          "/mnt/wsl/resolv.conf:/mnt/wsl/resolv.conf"
-        ];
 
         wsl = {
           enable = true;
           defaultUser = "myles";
-          useWindowsDriver = true;
           startMenuLaunchers = true;
           wslConf = {
             automount.enabled = false;
@@ -59,18 +51,10 @@
 
         nix.settings = {
           max-jobs = 8;
-          max-substitution-jobs = 4;
           auto-optimise-store = lib.mkForce false;
-          connect-timeout = 30;
-          download-attempts = 8;
-          http-connections = 10;
-          stalled-download-timeout = 180;
         };
 
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = true;
-        };
+        hardware.graphics.enable = true;
 
         fileSystems."/mnt/c" = {
           device = "C:";

@@ -10,7 +10,6 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIU1WdfeFe320nwVimkgjb+b7hDS6NL8Tvx8BdwuTYNn myles@wsl"
       ];
       packages = with pkgs; [
-        # -- shell --
         bat
         bat-extras.batdiff
         bat-extras.batgrep
@@ -18,60 +17,27 @@
         bat-extras.batwatch
         bat-extras.prettybat
         btop
+        chafa
         delta
-        fzf
-        starship
-        tmux
-        zoxide
-
-        # -- cli tools --
         dust
         fastfetch
         fd
+        ffmpeg
+        file
+        fzf
         hexyl
         jq
-        kakoune
-        lazygit
         ripgrep
-        tokei
+        starship
+        tmux
+        tree
+        viu
+        which
         yq-go
-
-        # -- media and documents --
-        ffmpeg
-        pandoc
-        typst
-
-        # -- encryption --
         age
         sops
         ssh-to-age
-
-        # -- language stuff --
-        alejandra
-        basedpyright
-        cargo
-        chafa
-        clang-tools
-        glsl_analyzer
-        isort
-        lua-language-server
-        nixd
-        ruff
-        rust-analyzer
-        rustfmt
-        stylua
-        tinymist
-        typstyle
-        ueberzugpp
-        viu
-        zig
-        zls
-
-        # -- misc --
-        chezmoi
-        file
-        tree
-        which
+        zoxide
       ];
       shell = pkgs.zsh;
     };

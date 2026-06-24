@@ -22,8 +22,8 @@
       neovim
 
       # -- services --
-			navidrome
-			nixarr
+      navidrome
+      nixarr
 
       # -- wsl --
       inputs.nixos-wsl.nixosModules.default
@@ -40,6 +40,21 @@
         };
 
         services.resolved.enable = lib.mkForce false;
+
+        services.prometheus.exporters = {
+          node = {
+            enable = true;
+            listenAddress = "0.0.0.0";
+            openFirewall = true;
+            enabledCollectors = ["systemd" "tcpstat" "network_route"];
+          };
+
+          systemd = {
+            enable = true;
+            listenAddress = "0.0.0.0";
+            openFirewall = true;
+          };
+        };
 
         systemd.services.navidrome.serviceConfig.BindReadOnlyPaths = [
           "/mnt/wsl/resolv.conf:/mnt/wsl/resolv.conf"
@@ -89,8 +104,8 @@
           fsType = "drvfs";
           options = [
             "metadata"
-            "uid=1000"
-            "gid=1500"
+            "uid=0"
+            "gid=169"
             "umask=002"
             "noatime"
           ];

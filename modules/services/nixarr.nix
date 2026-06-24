@@ -1,11 +1,12 @@
 { inputs, ... }: {
-  flake.nixosModules.nixarr = { lib, ... }: {
+  flake.nixosModules.nixarr = { ... }: {
     imports = [
       inputs.nixarr.nixosModules.default
     ];
 
     nixarr = {
       enable = true;
+      exporters.enable = true;
 
       mediaDir = "/srv/storage/nixarr";
       stateDir = "/var/lib/nixarr";
@@ -116,33 +117,46 @@
         };
       };
 
-      qbittorrent = {
-        enable = true;
-        openFirewall = true;
+			qbittorrent = {
+				enable = true;
+				openFirewall = true;
 
-        qui.enable = true;
+				qui.enable = true;
 
-        peerPort = 5085;
-        webuiPort = 8080;
+				peerPort = 5085;
+				webuiPort = 8080;
 
-        extraConfig = {
-          BitTorrent = {
-            "Session\\BTProtocol" = "TCP";
-            "Session\\DefaultSavePath" = "/srv/storage/nixarr/qbittorrent";
-            "Session\\GlobalDLSpeedLimit" = 98304;
-            "Session\\GlobalUPSpeedLimit" = 73728;
-            "Session\\IgnoreSlowTorrentsForQueueing" = true;
-            "Session\\MaxUploads" = 8;
-            "Session\\Preallocation" = true;
-            "Session\\QueuingSystemEnabled" = true;
-            "Session\\ExcludedFileNames" = "*.rar\n*.r[0-9]*";
-          };
+				extraConfig = {
+					BitTorrent = {
+						"Session\\BTProtocol" = "TCP";
+						"Session\\DefaultSavePath" = "/srv/storage/nixarr/qbittorrent";
+						"Session\\GlobalDLSpeedLimit" = 98304;
+						"Session\\GlobalUPSpeedLimit" = 73728;
+						"Session\\Preallocation" = true;
 
-          Network = {
-            PortForwardingEnabled = false;
-          };
-        };
-      };
+						"Session\\QueueingSystemEnabled" = true;
+						"Session\\MaxActiveDownloads" = 6;
+						"Session\\MaxActiveUploads" = 20;
+						"Session\\MaxActiveTorrents" = 40;
+
+						"Session\\IgnoreSlowTorrentsForQueueing" = true;
+						"Session\\SlowTorrentsDownloadRate" = 256;
+						"Session\\SlowTorrentsUploadRate" = 5;
+						"Session\\SlowTorrentsInactivityTimer" = 300;
+
+						"Session\\MaxActiveCheckingTorrents" = 1;
+
+						"Session\\DisableAutoTMMByDefault" = false;
+						"Session\\SubcategoriesEnabled" = true;
+
+						"Session\\ExcludedFileNames" = "*.rar\n*.r[0-9]*";
+					};
+
+					Network = {
+						PortForwardingEnabled = true;
+					};
+				};
+			};
 
       recyclarr = {
         enable = true;

@@ -20,9 +20,11 @@
       # -- services --
       avahi
       ddclient
+      grafana
       homeAssistant
       nginx
       ntfy
+      prometheus
       searx
       vaultwarden
 

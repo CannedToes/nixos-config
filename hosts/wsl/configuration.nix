@@ -22,15 +22,8 @@
       neovim
 
       # -- services --
-      jellyfin
-      lidarr
-      navidrome
-      plex
-      prowlarr
-      qbittorrent
-      radarr
-      recyclarr
-      sonarr
+			navidrome
+			nixarr
 
       # -- wsl --
       inputs.nixos-wsl.nixosModules.default

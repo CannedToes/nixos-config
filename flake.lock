@@ -189,6 +189,22 @@
         "type": "github"
       }
     },
+    "flaresolverr-rs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782481621,
+        "narHash": "sha256-Xd0bPRcjal4VN0G1zQXDUojkT78EMQCtjSnm6frJ3Js=",
+        "owner": "eben0",
+        "repo": "flaresolverr-rs",
+        "rev": "f75f3f110bf0bbfbedc5390e34791d46370ceab7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "eben0",
+        "repo": "flaresolverr-rs",
+        "type": "github"
+      }
+    },
     "hwinfo": {
       "inputs": {
         "blueprint": [
@@ -368,6 +384,7 @@
       "inputs": {
         "disko": "disko",
         "flake-parts": "flake-parts",
+        "flaresolverr-rs": "flaresolverr-rs",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nixarr": "nixarr",
         "nixos-facter": "nixos-facter",

@@ -7,9 +7,8 @@ NixOS flake using `flake-parts` with auto-imported modules via `importTree`.
 This repo values simplicity, readability, and maintainability above all else.
 Every addition should be questioned: is this necessary? can it be simpler?
 
-- **comments**: minimize them. only add when the code cannot make itself clear
-  through context. when you do comment, use lowercase, no punctuation at the end.
-  section headings inside a module: `-- heading --`
+- **comments**: minimize them. only add when the code cannot be made clear
+  through context and naming. lowercase, no trailing punctuation.
 - **prefer native nixpkgs**: use the built-in `services.*` modules over wrapping
   things in containers (podman/docker). containers are a last resort when
   nixpkgs has no native module for what you need.
@@ -22,7 +21,7 @@ Every addition should be questioned: is this necessary? can it be simpler?
 
 ## hosts
 
-- `desktop` — amd + nvidia gaming/workstation (cachyos kernel, plymouth, grub)
+- `desktop` — amd + nvidia gaming/workstation (cachyos kernel, nixos-facter, plymouth, grub)
 - `laptop` — amd laptop (zen kernel, tlp, nixos-facter, plymouth, grub)
 - `server` — headless (disko lvm, systemd-boot, nixos-facter, nginx, monitoring)
 - `wsl` — wsl2 (nixos-wsl, drvfs mounts, nixarr/media)
@@ -53,6 +52,9 @@ nix build .#<host>-vm      # build test vm (desktop, laptop, server)
 result/bin/run-<host>-vm   # run the vm after building
 ```
 
+note: `-vm` packages are only for desktop, laptop, and server. wsl uses
+nixos-wsl which is tested differently.
+
 ## secrets
 
 Managed by `sops-nix`. Per-host files at `hosts/<host>/secrets.yaml`.
@@ -70,5 +72,55 @@ Age key rules in `.sops.yaml`. Each host config sets `sops.defaultSopsFile`.
 
 ## key flake inputs
 
-`nixpkgs` (unstable), `sops-nix`, `disko`, `nixos-hardware`, `nixos-facter`,
-`nix-cachyos-kernel`, `nixos-wsl`, `impermanence`, `nixarr`, `treefmt-nix`.
+`nixpkgs` (unstable), `sops-nix`, `nixos-hardware`, `disko`, `nixos-facter`,
+`nix-cachyos-kernel`, `nixos-wsl`, `treefmt-nix`, `nixarr`, `zen-browser`.
+
+## agent tooling
+
+these tools are available on hosts that import `cli` or `development`
+(desktop, laptop, wsl). prefer them over slower alternatives:
+
+### trimming output
+
+pipe verbose commands through these to extract only what's needed:
+
+- `jc` — convert any command output to json, then query with `jq`:
+  `ps aux | jc --ps | jq '.[] | select(.state == "Z")'`
+  `journalctl --output=json | jc --journalctl | jq '.[] | {message: .MESSAGE}'`
+- `gron` — flatten json into grep-friendly lines so `rg` can search it:
+  `cat data.json | gron | rg some.key`
+- `choose` — field extraction by column index or name
+- `rg` — regex search with `-C N` context, `--json` for structured output
+
+### composing commands
+
+- `fzf` — fuzzy filter any list, pipe output into next command
+- `entr` — run commands when files change: `ls *.rs | entr cargo test`
+- `sd` — find-and-replace with regex (way simpler than sed)
+- `just` — write reusable command recipes in a justfile
+- `watchexec` — watch directory + re-run on any change
+
+### diagnosis
+
+- `procs` — process viewer with tree/regex (never `ps aux | grep`)
+- `btop` / `htop` — system resource monitors
+- `dust` — disk usage (never `du -sh * | sort -h`)
+- `bandwhich` — per-process network bandwidth
+- `dogdns` — dns lookup (never `dig`/`nslookup`)
+- `tealdeer` — quick command examples: `tldr <tool>`
+- `nix-output-monitor` — compact nix build output (nom build)
+- `nvd` — nix store version diff: `nvd diff /nix/store/old /nix/store/new`
+- `nix-du` — nix store disk usage breakdown
+- `hyperfine` — benchmark commands
+- `difftastic` — syntax-aware structural diffs
+- `grex` — generate regex from plain examples
+
+### general purpose
+
+- `fd` — file finding (never `find`)
+- `bat` — file viewing with line numbers; `bat --plain` for scripts
+- `eza` — dir listing + tree; `eza --tree` replaces `tree`
+- `jq` / `yq` — json / yaml querying
+- `delta` — better git diffs (already set as PAGER)
+- `batgrep` / `batdiff` / `batman` / `batwatch` — bat wrappers
+- `pv` — pipe progress monitor

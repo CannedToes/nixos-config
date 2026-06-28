@@ -17,6 +17,7 @@
       # python
       basedpyright
       isort
+      python3
       ruff
 
       # c/c++
@@ -39,6 +40,29 @@
       pandoc
       tokei
       ueberzugpp
+
+      # secrets
+      age
+      sops
+      ssh-to-age
+
+      # media processing
+      ffmpeg
+
+      # text processing
+      grex
+      sd
+
+      # dev utilities
+      difftastic
+      just
+      hyperfine
+      watchexec
+
+      # nix diagnostics
+      nix-output-monitor
+      nix-du
+      nvd
     ];
   };
 }

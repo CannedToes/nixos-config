@@ -5,14 +5,14 @@
     nix.settings = {
       experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
-      download-buffer-size = 524288000;
     };
 
-    nix.gc = {
-      automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 3d";
-    };
+		programs.nh = {
+			enable = true;
+			clean.enable = true;
+			clean.extraArgs = "--keep-since 4d --keep 3";
+			flake = "/home/myles/.config/nixos";
+		};
 
     system.stateVersion = "26.05";
   };

@@ -42,7 +42,6 @@ in {
 
       # -- services --
       navidrome
-      nixarr
 
       # -- host-specific settings --
       ({pkgs, ...}: {

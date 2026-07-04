@@ -52,7 +52,7 @@
             proxy_buffering off;
           '';
           locations."/" = {
-            proxyPass = "http://192.168.1.153:4533";
+            proxyPass = "http://192.168.1.152:4533";
             proxyWebsockets = true;
           };
         };
@@ -64,7 +64,7 @@
             proxy_buffering off;
           '';
           locations."/" = {
-            proxyPass = "http://192.168.1.153:8096";
+            proxyPass = "http://192.168.1.152:8096";
             proxyWebsockets = true;
           };
         };

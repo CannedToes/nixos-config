@@ -7,7 +7,7 @@ uses `flake-parts` with auto-imported modules via `importTree`.
 - **desktop** - amd + nvidia, cachyos kernel, plymouth, grub, sway
 - **laptop** - amd mobile, zen kernel, tlp power management, sway
 - **server** - headless, disko lvm, systemd-boot, nginx
-- **wsl** - nixos-wsl, drvfs mounts, nixarr media stack
+- **wsl** - nixos-wsl, drvfs mounts
 
 ## features
 

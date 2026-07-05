@@ -1,9 +1,9 @@
 keys:
-  - &myles age12y9t37jpa0fk25x6g5mpu7lx6nlxe8agayrzxfanz25rdal0xsxs3eg74u
+  - &myles age1jhnwcmup22pcfa0l3jr99eav839rcgfh46799q2hf3m2tzxtxpdsvqj26k
   - &desktop age1h3ujq0fl5jlaeac7m35l4nvr9q48whesyl9ngymasxq6hlwv7qyslukauc
   - &laptop age1h3ujq0fl5jlaeac7m35l4nvr9q48whesyl9ngymasxq6hlwv7qyslukauc
   - &server age1fsrx4yeulwv792tz8ahmegjp3c7ga7fr0cw5l26hqd5c4u98quzq0wlthj
-  - &wsl age1j6hhgvtcvae7c8p7yss808zgyxzzat2wkm2acxvkd6h6qevx8fgqyunlq0
+  - &wsl age14lm587xnn0yuj5jet4k03h3yllas097za3zy83tpdxyzsjzu736shtjznz
 
 creation_rules:
   - path_regex: hosts/laptop/secrets\.(yaml|json|env|ini)$

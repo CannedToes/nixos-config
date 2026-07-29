@@ -1,6 +1,11 @@
-{ lib, stdenvNoCC, fetchFromGitHub, fetchzip, bun, makeWrapper }:
-
-let
+{
+  lib,
+  stdenvNoCC,
+  fetchFromGitHub,
+  fetchzip,
+  bun,
+  makeWrapper,
+}: let
   bunBaseline = bun.overrideAttrs (old: {
     src = fetchzip {
       url = "https://github.com/oven-sh/bun/releases/download/bun-v1.3.13/bun-linux-x64-baseline.zip";
@@ -20,7 +25,7 @@ let
     version = "0.23.0";
     inherit src;
 
-    nativeBuildInputs = [ bunBaseline ];
+    nativeBuildInputs = [bunBaseline];
 
     buildPhase = ''
       export HOME="$TMPDIR"
@@ -39,45 +44,45 @@ let
     outputHash = "sha256-C61dko2C8XyuzNESGMSbCqeMNgKEwK2+/KadPlaZabg=";
   };
 in
-stdenvNoCC.mkDerivation {
-  pname = "degoog";
-  version = "0.23.0";
-  inherit src;
+  stdenvNoCC.mkDerivation {
+    pname = "degoog";
+    version = "0.23.0";
+    inherit src;
 
-  nativeBuildInputs = [ bunBaseline makeWrapper ];
+    nativeBuildInputs = [bunBaseline makeWrapper];
 
-  preConfigure = ''
-    cp -r "${bunDeps}/node_modules" node_modules
-    chmod -R +w node_modules
-  '';
+    preConfigure = ''
+      cp -r "${bunDeps}/node_modules" node_modules
+      chmod -R +w node_modules
+    '';
 
-  configurePhase = ''
-    runHook preConfigure
-    runHook postConfigure
-  '';
+    configurePhase = ''
+      runHook preConfigure
+      runHook postConfigure
+    '';
 
-  buildPhase = ''
-    runHook preBuild
-    bun run build.ts
-    runHook postBuild
-  '';
+    buildPhase = ''
+      runHook preBuild
+      bun run build.ts
+      runHook postBuild
+    '';
 
-  installPhase = ''
-    runHook preInstall
-    mkdir -p "$out/share/degoog" "$out/bin"
-    cp -r src package.json bun.lock node_modules "$out/share/degoog/"
-    rm -rf "$out/share/degoog/node_modules/.cache"
-    makeWrapper ${bunBaseline}/bin/bun "$out/bin/degoog" \
-      --add-flags "run $out/share/degoog/src/server/index.ts" \
-      --chdir "$out/share/degoog"
-    runHook postInstall
-  '';
+    installPhase = ''
+      runHook preInstall
+      mkdir -p "$out/share/degoog" "$out/bin"
+      cp -r src package.json bun.lock node_modules "$out/share/degoog/"
+      rm -rf "$out/share/degoog/node_modules/.cache"
+      makeWrapper ${bunBaseline}/bin/bun "$out/bin/degoog" \
+        --add-flags "run $out/share/degoog/src/server/index.ts" \
+        --chdir "$out/share/degoog"
+      runHook postInstall
+    '';
 
-  meta = {
-    description = "Self-hosted search engine aggregator with plugin support";
-    homepage = "https://github.com/degoog-org/degoog";
-    license = lib.licenses.agpl3Only;
-    platforms = lib.platforms.linux;
-    mainProgram = "degoog";
-  };
-}
+    meta = {
+      description = "Self-hosted search engine aggregator with plugin support";
+      homepage = "https://github.com/degoog-org/degoog";
+      license = lib.licenses.agpl3Only;
+      platforms = lib.platforms.linux;
+      mainProgram = "degoog";
+    };
+  }

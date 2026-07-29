@@ -1,5 +1,5 @@
-{ inputs, ... }: {
-  flake.nixosModules.degoog = { config, ... }: {
+{inputs, ...}: {
+  flake.nixosModules.degoog = {config, ...}: {
     imports = [
       ../../pkgs/degoog/_module.nix
     ];

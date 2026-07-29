@@ -1,10 +1,15 @@
-{ config, pkgs, lib, ... }: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (lib) types mkOption mkIf mkEnableOption literalExpression getExe;
 
   cfg = config.services.degoog;
   srv = cfg.settings;
 
-  degoogPackage = pkgs.callPackage ./_default.nix { };
+  degoogPackage = pkgs.callPackage ./_default.nix {};
 
   extensionType = types.submodule {
     options = {
@@ -21,13 +26,18 @@
   };
 
   mkExtensionLinks = let
-    cats = { inherit (cfg) plugins themes engines transports autocomplete; };
-    rules = lib.flatten (lib.mapAttrsToList (cat: exts:
-      lib.mapAttrsToList (name: ext:
-        lib.optionalString ext.enable "L+ ${cfg.dataDir}/data/${cat}/${name} - - - - ${ext.src}/${ext.subpath}"
-      ) exts
-    ) cats);
-  in builtins.filter (s: s != "") rules;
+    cats = {inherit (cfg) plugins themes engines transports autocomplete;};
+    rules = lib.flatten (lib.mapAttrsToList (
+        cat: exts:
+          lib.mapAttrsToList (
+            name: ext:
+              lib.optionalString ext.enable "L+ ${cfg.dataDir}/data/${cat}/${name} - - - - ${ext.src}/${ext.subpath}"
+          )
+          exts
+      )
+      cats);
+  in
+    builtins.filter (s: s != "") rules;
 
   writeJson = file: content: ''
     cat > "${cfg.dataDir}/data/${file}" << 'EOF'
@@ -193,7 +203,7 @@ in {
           };
 
           logLevel = mkOption {
-            type = types.enum [ "fatal" "error" "warn" "info" "log" "debug" ];
+            type = types.enum ["fatal" "error" "warn" "info" "log" "debug"];
             default = "info";
             description = "Server-side console output verbosity";
           };
@@ -308,14 +318,14 @@ in {
 
     systemd.tmpfiles.rules =
       map (d: "d ${cfg.dataDir}${d} 0700 ${cfg.user} ${cfg.group} -")
-        [ "" "/data" "/data/plugins" "/data/themes" "/data/engines" "/data/transports" "/data/autocomplete" ]
+      ["" "/data" "/data/plugins" "/data/themes" "/data/engines" "/data/transports" "/data/autocomplete"]
       ++ mkExtensionLinks;
 
     systemd.services.degoog = {
       description = "Degoog search aggregator";
-      after = [ "network.target" "network-online.target" ];
-      wants = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
+      after = ["network.target" "network-online.target"];
+      wants = ["network-online.target"];
+      wantedBy = ["multi-user.target"];
 
       preStart = lib.concatStringsSep "\n" (
         lib.optional (cfg.defaultEngines != {}) (writeJson "default-engines.json" cfg.defaultEngines)
@@ -323,41 +333,49 @@ in {
         ++ lib.optional (cfg.blocklist != []) (writeJson "blocklist.json" cfg.blocklist)
       );
 
-      serviceConfig = {
-        Type = "simple";
-        User = cfg.user;
-        Group = cfg.group;
-        WorkingDirectory = "${cfg.package}/share/degoog";
-        ExecStart = "${getExe cfg.package}";
-        Restart = "on-failure";
-        RestartSec = "5s";
-        StateDirectory = baseNameOf cfg.dataDir;
-        StateDirectoryMode = "0700";
+      serviceConfig =
+        {
+          Type = "simple";
+          User = cfg.user;
+          Group = cfg.group;
+          WorkingDirectory = "${cfg.package}/share/degoog";
+          ExecStart = "${getExe cfg.package}";
+          Restart = "on-failure";
+          RestartSec = "5s";
+          StateDirectory = baseNameOf cfg.dataDir;
+          StateDirectoryMode = "0700";
 
-        NoNewPrivileges = true;
-        ProtectSystem = "strict";
-        ProtectHome = true;
-        PrivateTmp = true;
-        PrivateDevices = true;
-        ProtectKernelTunables = true;
-        ProtectKernelModules = true;
-        ProtectControlGroups = true;
-        MemoryDenyWriteExecute = false;
-        RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
-        RestrictNamespaces = true;
-        LockPersonality = true;
-        ReadWritePaths = [ cfg.dataDir ];
-      } // lib.optionalAttrs (cfg.environmentFile != null || srv.settingsPasswordFile != null) {
-        EnvironmentFile = lib.filter (f: f != null) [ cfg.environmentFile srv.settingsPasswordFile ];
-      };
+          NoNewPrivileges = true;
+          ProtectSystem = "strict";
+          ProtectHome = true;
+          PrivateTmp = true;
+          PrivateDevices = true;
+          ProtectKernelTunables = true;
+          ProtectKernelModules = true;
+          ProtectControlGroups = true;
+          MemoryDenyWriteExecute = false;
+          RestrictAddressFamilies = ["AF_INET" "AF_INET6" "AF_UNIX"];
+          RestrictNamespaces = true;
+          LockPersonality = true;
+          ReadWritePaths = [cfg.dataDir];
+        }
+        // lib.optionalAttrs (cfg.environmentFile != null || srv.settingsPasswordFile != null) {
+          EnvironmentFile = lib.filter (f: f != null) [cfg.environmentFile srv.settingsPasswordFile];
+        };
 
       environment = lib.filterAttrs (_: v: v != null) {
         DEGOOG_PORT = toString srv.port;
         DEGOOG_UNIX_SOCKET = srv.unixSocket;
         DEGOOG_BASE_URL = srv.baseUrl;
         DEGOOG_SETTINGS_PATH = srv.settingsPath;
-        DEGOOG_PUBLIC_INSTANCE = if srv.publicInstance then "true" else "false";
-        DEGOOG_DISTRUST_PROXY = if srv.distrustProxy then "1" else "0";
+        DEGOOG_PUBLIC_INSTANCE =
+          if srv.publicInstance
+          then "true"
+          else "false";
+        DEGOOG_DISTRUST_PROXY =
+          if srv.distrustProxy
+          then "1"
+          else "0";
         DEGOOG_DEFAULT_SEARCH_LANGUAGE = srv.defaultSearchLanguage;
         DEGOOG_I18N = srv.i18n;
         DEGOOG_VALKEY_URL = srv.valkeyUrl;
@@ -366,9 +384,18 @@ in {
         DEGOOG_CACHE_SHORT_TTL_MS = toString srv.cacheShortTtlMs;
         DEGOOG_CACHE_NEWS_TTL_MS = toString srv.cacheNewsTtlMs;
         LOG_LEVEL = srv.logLevel;
-        LOG_TRANSLATION = if srv.logTranslation then "true" else "false";
-        DEGOOG_BETA_STORE = if srv.betaStore then "1" else "0";
-        DEGOOG_WIZARD = if srv.wizard then "true" else "false";
+        LOG_TRANSLATION =
+          if srv.logTranslation
+          then "true"
+          else "false";
+        DEGOOG_BETA_STORE =
+          if srv.betaStore
+          then "1"
+          else "0";
+        DEGOOG_WIZARD =
+          if srv.wizard
+          then "true"
+          else "false";
         DEGOOG_DATA_DIR = "${cfg.dataDir}/data";
         DEGOOG_OUTGOING_ALLOWED_HOSTS =
           if srv.outgoingAllowedHosts != []

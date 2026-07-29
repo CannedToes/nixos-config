@@ -20,11 +20,33 @@
         runHook postInstall
       '';
     };
+
+    monokai-gtk = pkgs.stdenvNoCC.mkDerivation {
+      pname = "monokai-gtk";
+      version = "unstable-2018-04-03";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "mitch-kyle";
+        repo = "monokai-gtk";
+        rev = "4ab0d6df71601f96365f23c786150a3b5e8a0021";
+        hash = "sha256-fJqws14h9WcfqKXA3aIiEGaXSHRQjR4cCil6gfkBums=";
+      };
+
+      dontBuild = true;
+
+      installPhase = ''
+        runHook preInstall
+        mkdir -p $out/share/themes
+        cp -r $src $out/share/themes/monokai
+        runHook postInstall
+      '';
+    };
   in {
     environment = {
       sessionVariables = {
         XCURSOR_SIZE = "24";
         XCURSOR_THEME = "Vanilla-DMZ";
+        GTK_THEME = "monokai";
       };
 
       systemPackages = with pkgs; [
@@ -32,6 +54,7 @@
         hicolor-icon-theme
         vanilla-dmz
         vague-gtk
+        monokai-gtk
       ];
     };
 

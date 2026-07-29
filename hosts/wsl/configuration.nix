@@ -17,15 +17,12 @@
       # -- programs --
       beets
       cli
-      development
+      dev
       neovim
       emacs
 
       # -- wslg --
       fonts
-      theming
-      desktopPortal
-      session
 
       # -- services --
       navidrome
@@ -35,7 +32,15 @@
       inputs.nixos-wsl.nixosModules.default
 
       # -- host configuration --
-      ({config, pkgs, lib, ...}: {
+      ({
+        config,
+        pkgs,
+        lib,
+        ...
+      }: {
+        hardware.graphics.enable = true;
+        services.pulseaudio.enable = true;
+
         sops.defaultSopsFile = ./secrets.yaml;
 
         networking.hostName = "wsl";
@@ -50,54 +55,15 @@
 
         nixpkgs.overlays = [inputs.emacs-overlay.overlays.default];
 
-        # emacs-pgtk daemon auto-start causes Weston SIGSEGV on boot
-        # due to GTK3 PGTK race condition with WSLg initialization.
-        # Start manually: systemctl --user start emacs
-        services.emacs.enable = lib.mkForce false;
-
         wsl = {
           enable = true;
-          useWindowsDriver = true;
           defaultUser = "myles";
           startMenuLaunchers = true;
           wslConf = {
             automount.enabled = false;
-            interop.appendWindowsPath = true;
+            interop.appendWindowsPath = false;
             network.generateResolvConf = false;
           };
-        };
-
-        systemd.tmpfiles.rules = [
-          "L+ /run/user/${toString config.users.users.myles.uid}/wayland-0 - - - - /mnt/wslg/runtime-dir/wayland-0"
-        ];
-
-        environment.interactiveShellInit = ''
-          export PATH="$PATH:$HOME/.config/emacs/bin"
-        '';
-
-        # gui apps through wslg
-        environment.systemPackages = with pkgs; [
-          glib-networking
-          gsettings-desktop-schemas
-          libnotify
-          libsoup_3
-          pulseaudio
-          shared-mime-info
-          vulkan-loader
-          wl-clipboard
-          nerd-fonts.symbols-only
-        ];
-
-        fileSystems."/mnt/c" = {
-          device = "C:";
-          fsType = "drvfs";
-          options = [
-            "metadata"
-            "uid=1000"
-            "gid=100"
-            "umask=022"
-            "noatime"
-          ];
         };
 
         fileSystems."/srv/storage" = {

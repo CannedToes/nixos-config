@@ -55,7 +55,7 @@
 
       # network
       bandwhich
-			openssl
+      openssl
 
       # terminal media
       chafa

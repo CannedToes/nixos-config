@@ -21,6 +21,8 @@
       commonHttpConfig = ''
         access_log /var/log/nginx/access.log;
         error_log /var/log/nginx/error.log;
+        proxy_headers_hash_max_size 1024;
+        proxy_headers_hash_bucket_size 128;
         more_set_headers "X-Content-Type-Options: nosniff";
         more_set_headers "X-XSS-Protection: 1; mode=block";
         more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";

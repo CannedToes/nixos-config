@@ -3,6 +3,12 @@
     environment.systemPackages = with pkgs; [
       emacs-pgtk
       clang
+      findutils
+      libvterm
+      hunspell
+      hunspellDicts.en_US
+      shellcheck
+      graphviz
     ];
 
     services.emacs = {

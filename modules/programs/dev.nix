@@ -1,9 +1,13 @@
 {...}: {
-  flake.nixosModules.development = {pkgs, ...}: {
+  flake.nixosModules.dev = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       # nix
       alejandra
       nixd
+
+      # build tools
+      cmake
+      nodejs
 
       # rust
       cargo

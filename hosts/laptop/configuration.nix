@@ -41,7 +41,7 @@ in {
 
       # -- programs --
       cli
-      development
+      dev
       emacs
       neovim
 

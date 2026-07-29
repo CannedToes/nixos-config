@@ -34,7 +34,7 @@ in {
       # -- programs --
       beets
       cli
-      development
+      dev
       emacs
       neovim
 

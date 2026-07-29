@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  lib,
   ...
 }: {
   flake.nixosConfigurations.wsl = inputs.nixpkgs.lib.nixosSystem {
@@ -19,32 +18,46 @@
       beets
       cli
       development
-      git
       neovim
+      emacs
+
+      # -- wslg --
+      fonts
+      theming
+      desktopPortal
+      session
 
       # -- services --
       navidrome
-			jellyfin
+      jellyfin
 
       # -- wsl --
       inputs.nixos-wsl.nixosModules.default
 
       # -- host configuration --
-      {
+      ({config, pkgs, lib, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
 
         networking.hostName = "wsl";
 
-        networking.resolvconf.enable = false;
+        networking.dhcpcd.enable = false;
+        networking.firewall.trustedInterfaces = ["lo"];
+        networking.networkmanager.enable = false;
 
-        environment.etc."resolv.conf".text = ''
-          nameserver 9.9.9.9
-          nameserver 149.112.112.112
-          options edns0
-        '';
+        systemd.network.enable = false;
+        systemd.services.systemd-resolved.enable = false;
+        systemd.services.systemd-udevd.enable = false;
+
+        nixpkgs.overlays = [inputs.emacs-overlay.overlays.default];
+
+        # emacs-pgtk daemon auto-start causes Weston SIGSEGV on boot
+        # due to GTK3 PGTK race condition with WSLg initialization.
+        # Start manually: systemctl --user start emacs
+        services.emacs.enable = lib.mkForce false;
 
         wsl = {
           enable = true;
+          useWindowsDriver = true;
           defaultUser = "myles";
           startMenuLaunchers = true;
           wslConf = {
@@ -54,60 +67,26 @@
           };
         };
 
-        nix.settings = {
-          max-jobs = 8;
-        };
+        systemd.tmpfiles.rules = [
+          "L+ /run/user/${toString config.users.users.myles.uid}/wayland-0 - - - - /mnt/wslg/runtime-dir/wayland-0"
+        ];
 
-        # systemd.services = {
-        #   transmission.serviceConfig = {
-        #     MemoryMax = "512M";
-        #     MemoryHigh = "256M";
-        #   };
-        #   jellyfin.serviceConfig = {
-        #     MemoryMax = "2G";
-        #     MemoryHigh = "1G";
-        #   };
-        #   sonarr.serviceConfig = {
-        #     MemoryMax = "1G";
-        #     MemoryHigh = "768M";
-        #   };
-        #   radarr.serviceConfig = {
-        #     MemoryMax = "1G";
-        #     MemoryHigh = "768M";
-        #   };
-        #   prowlarr.serviceConfig = {
-        #     MemoryMax = "768M";
-        #     MemoryHigh = "512M";
-        #   };
-        #   lidarr.serviceConfig = {
-        #     MemoryMax = "768M";
-        #     MemoryHigh = "512M";
-        #   };
-        #   seerr.serviceConfig = {
-        #     MemoryMax = "768M";
-        #     MemoryHigh = "512M";
-        #   };
-        #   bazarr.serviceConfig = {
-        #     MemoryMax = "512M";
-        #     MemoryHigh = "256M";
-        #   };
-        #   navidrome.serviceConfig = {
-        #     MemoryMax = "256M";
-        #     MemoryHigh = "128M";
-        #   };
-        #   audiobookshelf.serviceConfig = {
-        #     MemoryMax = "256M";
-        #     MemoryHigh = "128M";
-        #   };
-        #   shelfmark.serviceConfig = {
-        #     MemoryMax = "256M";
-        #     MemoryHigh = "128M";
-        #   };
-        #   "flaresolverr-rs".serviceConfig = {
-        #     MemoryMax = "2G";
-        #     MemoryHigh = "1G";
-        #   };
-        # };
+        environment.interactiveShellInit = ''
+          export PATH="$PATH:$HOME/.config/emacs/bin"
+        '';
+
+        # gui apps through wslg
+        environment.systemPackages = with pkgs; [
+          glib-networking
+          gsettings-desktop-schemas
+          libnotify
+          libsoup_3
+          pulseaudio
+          shared-mime-info
+          vulkan-loader
+          wl-clipboard
+          nerd-fonts.symbols-only
+        ];
 
         fileSystems."/mnt/c" = {
           device = "C:";
@@ -132,7 +111,7 @@
             "noatime"
           ];
         };
-      }
+      })
     ];
   };
 

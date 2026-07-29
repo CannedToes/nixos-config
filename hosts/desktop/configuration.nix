@@ -29,7 +29,6 @@ in {
       fonts
       gaming
       media
-      printing
       sway
 
       # -- programs --
@@ -37,7 +36,6 @@ in {
       cli
       development
       emacs
-      git
       neovim
 
       # -- services --
@@ -45,6 +43,8 @@ in {
 
       # -- host-specific settings --
       ({pkgs, ...}: {
+        services.printing.enable = true;
+
         sops.defaultSopsFile = ./secrets.yaml;
 
         nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];

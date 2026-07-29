@@ -34,18 +34,15 @@ in {
       gaming
       media
       netbeans
-      networkManager
       session
       sway
       theming
-      printing
       viewers
 
       # -- programs --
       cli
       development
       emacs
-      git
       neovim
 
       # -- services --
@@ -53,6 +50,9 @@ in {
 
       # -- host-specific settings --
       ({pkgs, ...}: {
+        services.printing.enable = true;
+        networking.networkmanager.enable = true;
+
         sops.defaultSopsFile = ./secrets.yaml;
         hardware.facter.reportPath = ./facter.json;
 

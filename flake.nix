@@ -34,6 +34,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,6 +53,29 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    omnisearch = {
+      url = "git+https://git.bwaaa.monster/omnisearch";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        beaker-src.follows = "beaker-src";
+      };
+    };
+    beaker-src = {
+      url = "git+https://git.bwaaa.monster/beaker";
+      flake = false;
+    };
+
+    official-extensions = {
+      url = "github:degoog-org/official-extensions";
+      flake = false;
+    };
+
   };
 
   outputs = inputs: let

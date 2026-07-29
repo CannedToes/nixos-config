@@ -21,6 +21,7 @@
       ruff
 
       # c/c++
+      gcc
       clang-tools
       glsl_analyzer
 
@@ -35,11 +36,9 @@
 
       # general dev
       chezmoi
+      gitFull
       helix
-      lazygit
       pandoc
-      tokei
-      ueberzugpp
 
       # secrets
       age
@@ -48,21 +47,6 @@
 
       # media processing
       ffmpeg
-
-      # text processing
-      grex
-      sd
-
-      # dev utilities
-      difftastic
-      just
-      hyperfine
-      watchexec
-
-      # nix diagnostics
-      nix-output-monitor
-      nix-du
-      nvd
     ];
   };
 }

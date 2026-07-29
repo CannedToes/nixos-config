@@ -2,7 +2,7 @@
   flake.nixosModules.cli = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       # system utilities
-      busybox
+      coreutils
       curl
       dosfstools
       ntfs3g

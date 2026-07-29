@@ -75,7 +75,6 @@
       url = "github:degoog-org/official-extensions";
       flake = false;
     };
-
   };
 
   outputs = inputs: let

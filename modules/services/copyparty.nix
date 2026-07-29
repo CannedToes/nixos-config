@@ -1,6 +1,11 @@
-{ inputs, ... }: {
-  flake.nixosModules.copyparty = { config, lib, pkgs, ... }: {
-    imports = [ inputs.copyparty.nixosModules.default ];
+{inputs, ...}: {
+  flake.nixosModules.copyparty = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: {
+    imports = [inputs.copyparty.nixosModules.default];
 
     sops.secrets."copyparty/myles" = {
       owner = "copyparty";
@@ -25,7 +30,7 @@
         "/" = {
           path = "/var/lib/copyparty/data";
           access = {
-            rwmd = [ "myles" ];
+            rwmd = ["myles"];
           };
         };
       };

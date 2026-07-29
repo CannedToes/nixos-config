@@ -1,6 +1,9 @@
-{self, inputs, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.nixosModules.omnisearch = {...}: {
-
     imports = [
       inputs.omnisearch.nixosModules.default
     ];
@@ -17,6 +20,5 @@
         };
       };
     };
-
   };
 }

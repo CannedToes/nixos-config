@@ -15,7 +15,6 @@
       users
 
       # -- programs --
-      beets
       cli
       dev
       neovim

@@ -32,8 +32,7 @@ in {
       vaultwarden
 
       # -- host config --
-      ({...}: {
-        hardware.facter.reportPath = ./facter.json;
+      ({pkgs, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
 
         networking = {
@@ -62,7 +61,7 @@ in {
 
         programs.git.enable = true;
 
-        services.xserver.enable = false;
+        environment.systemPackages = with pkgs; [gitFull];
 
         nix.settings.max-jobs = 4;
       })

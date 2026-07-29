@@ -2,7 +2,6 @@
   flake.nixosModules.cli = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       # system utilities
-      coreutils
       curl
       dosfstools
       ntfs3g
@@ -10,10 +9,8 @@
 
       # system info & monitoring
       btop
-      dust
       fastfetch
       file
-      htop
       iotop
       ncdu
       procs
@@ -24,11 +21,6 @@
 
       # file viewing & search
       bat
-      bat-extras.batdiff
-      bat-extras.batgrep
-      bat-extras.batman
-      bat-extras.batwatch
-      bat-extras.prettybat
       fd
       fzf
       hexyl
@@ -58,7 +50,6 @@
       openssl
 
       # terminal media
-      chafa
       viu
     ];
   };

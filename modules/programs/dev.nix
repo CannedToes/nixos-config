@@ -2,7 +2,6 @@
   flake.nixosModules.dev = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       # nix
-      alejandra
       nixd
 
       # build tools
@@ -14,10 +13,6 @@
       rust-analyzer
       rustfmt
 
-      # zig
-      zig
-      zls
-
       # python
       basedpyright
       isort
@@ -27,7 +22,6 @@
       # c/c++
       gcc
       clang-tools
-      glsl_analyzer
 
       # lua
       lua-language-server
@@ -39,18 +33,13 @@
       typstyle
 
       # general dev
-      chezmoi
-      gitFull
-      helix
+      git
       pandoc
 
       # secrets
       age
       sops
       ssh-to-age
-
-      # media processing
-      ffmpeg
     ];
   };
 }

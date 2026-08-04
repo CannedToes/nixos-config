@@ -59,18 +59,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    omnisearch = {
-      url = "git+https://git.bwaaa.monster/omnisearch";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        beaker-src.follows = "beaker-src";
-      };
-    };
-    beaker-src = {
-      url = "git+https://git.bwaaa.monster/beaker";
-      flake = false;
-    };
-
     official-extensions = {
       url = "github:degoog-org/official-extensions";
       flake = false;

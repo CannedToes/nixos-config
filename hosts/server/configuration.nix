@@ -24,30 +24,22 @@ in {
       copyparty
       ddclient
       degoog
+      flaresolverr
       homeAssistant
-      omnisearch
       mealie
       nginx
       ntfy
+      suwayomi
       vaultwarden
 
       # -- host config --
       ({pkgs, ...}: {
+        hardware.facter.reportPath = ./facter.json;
         sops.defaultSopsFile = ./secrets.yaml;
 
         networking = {
           hostName = "server";
-          useDHCP = false;
-
-          bridges.br0.interfaces = ["eth0"];
-          interfaces = {
-            br0 = {
-              useDHCP = true;
-              macAddress = "1c:69:7a:d9:e0:75";
-            };
-            eth0.useDHCP = false;
-          };
-
+          interfaces.eth0.macAddress = "1c:69:7a:d9:e0:75";
           hosts."127.0.0.1" = subdomains;
         };
 
@@ -70,6 +62,5 @@ in {
 
   perSystem = {...}: {
     packages.server = self.nixosConfigurations.server.config.system.build.toplevel;
-    packages.server-vm = self.nixosConfigurations.server.config.system.build.vm;
   };
 }

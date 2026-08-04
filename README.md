@@ -1,10 +1,9 @@
 # nixos-config
 
-personal nixos flake for my desktop, laptop, server, and wsl environments.
+personal nixos flake for my laptop, server, and wsl environments.
 uses `flake-parts` with auto-imported modules via `importTree`.
 
 ## hosts
-- **desktop** - amd + nvidia, cachyos kernel, plymouth, grub, sway
 - **laptop** - amd mobile, zen kernel, tlp power management, sway
 - **server** - headless, disko lvm, systemd-boot, nginx
 - **wsl** - nixos-wsl, drvfs mounts
@@ -25,7 +24,7 @@ nix build .#laptop-vm
 result/bin/run-laptop-vm
 ```
 
-available vm profiles: `desktop-vm`, `laptop-vm`, `server-vm`.
+available vm profiles: `laptop-vm`
 
 ## disclaimer
 

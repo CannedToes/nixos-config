@@ -54,6 +54,10 @@
 
         nixpkgs.overlays = [inputs.emacs-overlay.overlays.default];
 
+        programs.fuse = {
+          enable = true;
+        };
+
         wsl = {
           enable = true;
           defaultUser = "myles";

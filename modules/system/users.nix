@@ -22,6 +22,8 @@
       enableZshIntegration = true;
     };
 
+    environment.systemPackages = with pkgs; [chezmoi];
+
     environment.sessionVariables = {
       EDITOR = "nvim";
       PAGER = "delta";

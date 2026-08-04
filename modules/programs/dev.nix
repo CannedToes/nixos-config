@@ -1,12 +1,13 @@
 {...}: {
   flake.nixosModules.dev = {pkgs, ...}: {
+    programs.git = {
+      enable = true;
+      package = pkgs.gitFull;
+    };
+
     environment.systemPackages = with pkgs; [
       # nix
       nixd
-
-      # build tools
-      cmake
-      nodejs
 
       # rust
       cargo
@@ -20,8 +21,8 @@
       ruff
 
       # c/c++
-      gcc
       clang-tools
+      gcc
 
       # lua
       lua-language-server
@@ -32,14 +33,9 @@
       typst
       typstyle
 
-      # general dev
-      git
-      pandoc
-
-      # secrets
-      age
-      sops
-      ssh-to-age
+      # general
+      helix
+      devenv
     ];
   };
 }

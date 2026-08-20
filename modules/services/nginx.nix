@@ -46,30 +46,6 @@
             extraConfig = "default_type text/html;";
           };
         };
-
-        "navidrome.myles.onl" = {
-          useACMEHost = "myles.onl";
-          forceSSL = true;
-          extraConfig = ''
-            proxy_buffering off;
-          '';
-          locations."/" = {
-            proxyPass = "http://192.168.1.152:4533";
-            proxyWebsockets = true;
-          };
-        };
-
-        "jellyfin.myles.onl" = {
-          useACMEHost = "myles.onl";
-          forceSSL = true;
-          extraConfig = ''
-            proxy_buffering off;
-          '';
-          locations."/" = {
-            proxyPass = "http://192.168.1.152:8096";
-            proxyWebsockets = true;
-          };
-        };
       };
     };
 

@@ -1,5 +1,9 @@
 {...}: {
   flake.nixosModules.cli = {pkgs, ...}: {
+    programs.tmux = {
+      enable = true;
+    };
+
     environment.systemPackages = with pkgs; [
       bat
       btop
@@ -13,7 +17,7 @@
       ripgrep
       starship
       tealdeer
-      tmux
+      wget
       zoxide
     ];
   };

@@ -17,30 +17,30 @@
       # -- programs --
       cli
       dev
-      neovim
-      emacs
 
       # -- wslg --
       fonts
-
-      # -- services --
-      navidrome
-      jellyfin
 
       # -- wsl --
       inputs.nixos-wsl.nixosModules.default
 
       # -- host configuration --
-      ({
-        config,
-        pkgs,
-        lib,
-        ...
-      }: {
-        hardware.graphics.enable = true;
-        services.pulseaudio.enable = true;
-
+      ({pkgs, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
+
+        boot.kernelModules = ["kvm" "kvm_amd"];
+        boot.extraModprobeConfig = "options kvm_amd nested=1";
+
+        virtualisation.libvirtd = {
+          enable = true;
+          qemu = {
+            package = pkgs.qemu_kvm;
+            runAsRoot = true;
+            swtpm.enable = true;
+          };
+        };
+
+        programs.virt-manager.enable = true;
 
         networking.hostName = "wsl";
 
@@ -58,6 +58,9 @@
           enable = true;
         };
 
+        hardware.graphics.enable = true;
+        hardware.graphics.enable32Bit = true;
+
         wsl = {
           enable = true;
           defaultUser = "myles";
@@ -67,18 +70,6 @@
             interop.appendWindowsPath = false;
             network.generateResolvConf = false;
           };
-        };
-
-        fileSystems."/srv/storage" = {
-          device = "D:";
-          fsType = "drvfs";
-          options = [
-            "metadata"
-            "uid=0"
-            "gid=169"
-            "umask=002"
-            "noatime"
-          ];
         };
       })
     ];

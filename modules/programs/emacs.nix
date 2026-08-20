@@ -6,7 +6,6 @@
       findutils
       libvterm
       hunspell
-      hunspellDicts.en_US
       shellcheck
       graphviz
     ];

@@ -6,36 +6,20 @@
     };
 
     environment.systemPackages = with pkgs; [
-      # nix
+      helix
       nixd
-
-      # rust
-      cargo
-      rust-analyzer
-      rustfmt
-
-      # python
-      basedpyright
-      isort
-      python3
-      ruff
-
-      # c/c++
-      clang-tools
-      gcc
-
-      # lua
-      lua-language-server
-      stylua
-
-      # typst
       tinymist
       typst
       typstyle
 
-      # general
-      helix
-      devenv
+      # cargo
+      # rust-analyzer
+      # rustfmt
+
+      # basedpyright
+      # isort
+      # python3
+      # ruff
     ];
   };
 }

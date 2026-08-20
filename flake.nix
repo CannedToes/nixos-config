@@ -63,6 +63,11 @@
       url = "github:degoog-org/official-extensions";
       flake = false;
     };
+
+    nixflix = {
+      url = "github:kiriwalawren/nixflix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let

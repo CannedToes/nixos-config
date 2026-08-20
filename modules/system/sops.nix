@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.nixosModules.sops = {...}: {
+  flake.nixosModules.sops = {pkgs, ...}: {
     imports = [
       inputs.sops-nix.nixosModules.sops
     ];
@@ -9,5 +9,9 @@
       keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
+
+    sops.useSystemdActivation = true;
+
+    environment.systemPackages = [pkgs.sops];
   };
 }

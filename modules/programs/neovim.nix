@@ -8,9 +8,11 @@
     };
 
     environment.systemPackages = with pkgs; [
+      clang-tools
       gcc
+      lua-language-server
       luajitPackages.tree-sitter-cli
-      neovim
+      stylua
     ];
   };
 }

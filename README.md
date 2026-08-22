@@ -4,6 +4,7 @@ personal nixos flake for my laptop, server, and wsl environments.
 uses `flake-parts` with auto-imported modules via `importTree`.
 
 ## hosts
+- **htpc** - low-end intel, plasma bigscreen, autologin, media players
 - **laptop** - amd mobile, zen kernel, tlp power management, sway
 - **server** - headless, disko lvm, systemd-boot, nginx
 - **wsl** - nixos-wsl, drvfs mounts

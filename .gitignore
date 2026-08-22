@@ -2,3 +2,5 @@ AGENTS.md
 .env
 *:Zone.Identifier
 *Zone.Identifier*
+result/
+*.qcow2

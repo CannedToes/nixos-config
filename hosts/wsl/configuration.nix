@@ -31,6 +31,11 @@
         boot.kernelModules = ["kvm" "kvm_amd"];
         boot.extraModprobeConfig = "options kvm_amd nested=1";
 
+        systemd.tmpfiles.rules = ["k /dev/kvm 0660 root kvm -"];
+
+        users.groups.kvm = {};
+        users.users.myles.extraGroups = ["kvm"];
+
         virtualisation.libvirtd = {
           enable = true;
           qemu = {

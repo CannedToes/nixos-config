@@ -28,10 +28,22 @@
       ({pkgs, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
 
-        boot.kernelModules = ["kvm" "kvm_amd"];
         boot.extraModprobeConfig = "options kvm_amd nested=1";
 
-        systemd.tmpfiles.rules = ["k /dev/kvm 0660 root kvm -"];
+        systemd.services.kvm-wsl = {
+          description = "Load KVM modules and set /dev/kvm permissions";
+          wantedBy = ["multi-user.target"];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            ExecStart = pkgs.writeShellScript "load-kvm" ''
+              ${pkgs.kmod}/bin/modprobe kvm
+              ${pkgs.kmod}/bin/modprobe kvm_amd
+              chown root:kvm /dev/kvm
+              chmod 0660 /dev/kvm
+            '';
+          };
+        };
 
         users.groups.kvm = {};
         users.users.myles.extraGroups = ["kvm"];

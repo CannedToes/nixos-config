@@ -2,5 +2,7 @@ AGENTS.md
 .env
 *:Zone.Identifier
 *Zone.Identifier*
-result/
+result
 *.qcow2
+.agents
+skills-lock.json

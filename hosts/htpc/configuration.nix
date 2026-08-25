@@ -122,19 +122,6 @@
               "-spice"
               "addr=127.0.0.1,port=5931,disable-ticketing=on"
 
-              "-vnc"
-              "127.0.0.1:5"
-
-              "-vga"
-              "qxl"
-
-              "-global"
-              "qxl-vga.xres=1920"
-              "-global"
-              "qxl-vga.yres=1080"
-              "-global"
-              "qxl-vga.vgamem_mb=64"
-
               "-device"
               "virtio-serial-pci"
               "-chardev"

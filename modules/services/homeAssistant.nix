@@ -2,16 +2,17 @@
   flake.nixosModules.homeAssistant = {pkgs, ...}: {
     services.postgresql = {
       enable = true;
-      ensureDatabases = [ "hass" ];
-      ensureUsers = [{
-        name = "hass";
-        ensureDBOwnership = true;
-      }];
+      ensureDatabases = ["hass"];
+      ensureUsers = [
+        {
+          name = "hass";
+          ensureDBOwnership = true;
+        }
+      ];
     };
-    
+
     services.home-assistant = {
       enable = true;
-      openFirewall = true;
       openFirewallForComponents = true;
 
       lovelaceConfigFile = null;
@@ -38,7 +39,6 @@
           ];
           use_x_forwarded_for = true;
         };
-
       };
 
       extraComponents = [
@@ -67,9 +67,10 @@
         tuya_local
       ];
 
-      extraPackages = ps: with ps; [
-        psycopg2
-      ];
+      extraPackages = ps:
+        with ps; [
+          psycopg2
+        ];
     };
 
     services.nginx.virtualHosts."home.myles.onl" = {

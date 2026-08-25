@@ -37,7 +37,7 @@
         proxyWebsockets = true;
       };
     };
-    
+
     users.users.jellyfin.extraGroups = ["media"];
   };
 }

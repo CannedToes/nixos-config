@@ -21,7 +21,6 @@ in {
 
       # -- services --
       avahi
-      calibreWebAutomated
       copyparty
       ddclient
       degoog

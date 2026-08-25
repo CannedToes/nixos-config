@@ -14,6 +14,9 @@
       sops
       users
 
+      # -- hardware --
+      graphics
+
       # -- programs --
       cli
       dev
@@ -46,7 +49,7 @@
         };
 
         users.groups.kvm = {};
-        users.users.myles.extraGroups = ["kvm"];
+        users.users.myles.extraGroups = ["kvm" "libvirtd"];
 
         virtualisation.libvirtd = {
           enable = true;
@@ -74,9 +77,6 @@
         programs.fuse = {
           enable = true;
         };
-
-        hardware.graphics.enable = true;
-        hardware.graphics.enable32Bit = true;
 
         wsl = {
           enable = true;

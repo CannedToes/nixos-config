@@ -1,6 +1,6 @@
 # nixos-config
 
-personal nixos flake for my laptop, server, and wsl environments.
+personal nixos flake for my laptop, server, htpc, and wsl environments.
 uses `flake-parts` with auto-imported modules via `importTree`.
 
 ## hosts
@@ -11,9 +11,8 @@ uses `flake-parts` with auto-imported modules via `importTree`.
 
 ## features
 
-- **dendritic** - as mentioned before it uses flake-parts and importTree to effortlessly modularize config (wow)
-- **secrets** - sops-nix with age encryption, per-host secret files
 - **auto-import** - any `.nix` file in is auto-loaded (prefixed `_` excluded)
+- **secrets** - sops-nix with age encryption, per-host secret files
 - **formatting** - alejandra via treefmt-nix (`nix fmt`)
 
 ## try a profile
@@ -25,7 +24,7 @@ nix build .#laptop-vm
 result/bin/run-laptop-vm
 ```
 
-available vm profiles: `laptop-vm`
+available vm profiles: `laptop-vm`, `htpc-vm`
 
 ## disclaimer
 

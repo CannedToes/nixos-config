@@ -6,7 +6,6 @@
   "vault.myles.onl"
   "jellyfin.myles.onl"
   "navidrome.myles.onl"
-  "degoog.myles.onl"
   "copyparty.myles.onl"
   "calibre.myles.onl"
 ]

@@ -12,10 +12,15 @@
       ./_disko.nix
 
       # -- system --
+      kernel
       locale
       networking
       nix
       users
+      zram
+
+      # -- hardware --
+      graphics
 
       # -- desktop --
       audio
@@ -30,27 +35,17 @@
 
         hardware.cpu.intel.updateMicrocode = true;
 
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = true;
-          extraPackages = [
-            pkgs.intel-media-driver
-            pkgs.intel-compute-runtime
-            pkgs.vpl-gpu-rt
-          ];
-        };
+        hardware.graphics.extraPackages = [
+          pkgs.intel-media-driver
+          pkgs.intel-compute-runtime
+          pkgs.vpl-gpu-rt
+        ];
 
         boot = {
           kernelPackages = pkgs.linuxPackages_zen;
           consoleLogLevel = 3;
-          initrd.verbose = false;
           kernelParams = [
-            "quiet"
             "splash"
-            "loglevel=3"
-            "rd.systemd.show_status=false"
-            "rd.udev.log_level=3"
-            "udev.log_priority=3"
             "nowatchdog"
           ];
           loader = {
@@ -62,12 +57,6 @@
         };
 
         powerManagement.cpuFreqGovernor = "powersave";
-
-        zramSwap = {
-          enable = true;
-          memoryPercent = 50;
-          algorithm = "lz4";
-        };
 
         services.fwupd.enable = false;
 

@@ -14,23 +14,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-facter = {
-      url = "github:numtide/nixos-facter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -56,16 +41,6 @@
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    official-extensions = {
-      url = "github:degoog-org/official-extensions";
-      flake = false;
-    };
-
-    nixflix = {
-      url = "github:kiriwalawren/nixflix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

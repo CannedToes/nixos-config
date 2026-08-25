@@ -8,18 +8,21 @@ in {
   flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
 
-    modules = with self.nixosModules;
-    with inputs.nixos-hardware.nixosModules; [
+    modules = with self.nixosModules; [
       # -- hardware scan --
       ./_hardware-configuration.nix
 
       # -- system --
       boot
+      kernel
       locale
       networking
       nix
       sops
       users
+
+      # -- hardware --
+      graphics
 
       # -- desktop --
       audio
@@ -59,17 +62,11 @@ in {
         boot = {
           kernelPackages = pkgs.linuxPackages_zen;
           consoleLogLevel = 3;
-          initrd.verbose = false;
           loader.grub.gfxmodeEfi = "1366x768";
           loader.timeout = 1;
           kernelParams = [
             "amd_pstate=active"
-            "quiet"
             "splash"
-            "loglevel=3"
-            "rd.systemd.show_status=false"
-            "rd.udev.log_level=3"
-            "udev.log_priority=3"
             "vt.global_cursor_default=0"
             "fsck.mode=auto"
             "fsck.repair=yes"
@@ -101,18 +98,13 @@ in {
           };
         };
 
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = true;
-        };
-
         nix.settings.max-jobs = 8;
 
         virtualisation.vmVariant = {
           services.spice-vdagentd.enable = true;
 
           virtualisation = {
-            diskImage = "./laptop-impermanence.qcow2";
+            diskImage = "./laptop.qcow2";
             memorySize = 4096;
             cores = 4;
             qemu.options = [

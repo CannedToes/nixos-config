@@ -14,16 +14,20 @@ in {
       ./_disko.nix
 
       # -- system --
+      kernel
       locale
       nix
       networking
       sops
+      zram
+
+      # -- hardware --
+      graphics
 
       # -- services --
       avahi
       copyparty
       ddclient
-      degoog
       flaresolverr
       homeAssistant
       jellyfin
@@ -44,8 +48,6 @@ in {
 
         hardware.enableRedistributableFirmware = true;
 
-        hardware.graphics.enable = true;
-        hardware.graphics.enable32Bit = true;
         hardware.graphics.extraPackages = [
           pkgs.intel-media-driver
           pkgs.vpl-gpu-rt
@@ -84,17 +86,12 @@ in {
           };
 
           kernelParams = [
-            "quiet"
-            "loglevel=3"
-            "rd.systemd.show_status=false"
-            "rd.udev.log_level=3"
             "nowatchdog"
             "tsc=reliable"
             "i915.enable_guc=3"
           ];
 
           initrd.systemd.enable = true;
-          initrd.verbose = false;
 
           kernel.sysctl = {
             "vm.swappiness" = 10;
@@ -143,12 +140,6 @@ in {
         };
 
         networking.useNetworkd = true;
-
-        zramSwap = {
-          enable = true;
-          memoryPercent = 50;
-          algorithm = "lz4";
-        };
       })
     ];
   };

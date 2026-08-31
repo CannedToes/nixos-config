@@ -24,7 +24,6 @@
       # -- host configuration --
       ({
         lib,
-        pkgs,
         ...
       }: {
         sops.defaultSopsFile = ./secrets.yaml;
@@ -52,9 +51,6 @@
           wslConf = {
             network.generateResolvConf = true;
           };
-          extraBin = [
-            {src = "${pkgs.coreutils}/bin/true";}
-          ];
         };
       })
     ];

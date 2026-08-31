@@ -29,24 +29,28 @@
       plasmaBigscreen
 
       # -- host-specific settings --
-      ({pkgs, ...}: {
+      ({
+        pkgs,
+        lib,
+        ...
+      }: {
+        hardware.facter.reportPath = ./facter.json;
         networking.hostName = "htpc";
         networking.networkmanager.enable = true;
 
         hardware.cpu.intel.updateMicrocode = true;
 
         hardware.graphics.extraPackages = [
-          pkgs.intel-media-driver
-          pkgs.intel-compute-runtime
-          pkgs.vpl-gpu-rt
+          pkgs.intel-vaapi-driver
         ];
 
         boot = {
-          kernelPackages = pkgs.linuxPackages_zen;
+          kernelPackages = pkgs.linuxPackages;
           consoleLogLevel = 3;
           kernelParams = [
             "splash"
             "nowatchdog"
+            "mitigations=off"
           ];
           loader = {
             efi.canTouchEfiVariables = true;
@@ -56,7 +60,19 @@
           };
         };
 
-        powerManagement.cpuFreqGovernor = "powersave";
+        powerManagement.cpuFreqGovernor = "performance";
+
+        networking.dhcpcd.enable = false;
+
+        networking.modemmanager.enable = false;
+        systemd.services.accounts-daemon.wantedBy = lib.mkForce [];
+        systemd.services.accounts-daemon.enable = lib.mkForce false;
+        services.power-profiles-daemon.enable = false;
+
+        nix.optimise.automatic = true;
+        nix.settings.max-jobs = 1;
+
+        services.journald.extraConfig = "SystemMaxUse=200M";
 
         services.fwupd.enable = false;
 
@@ -86,10 +102,47 @@
 
         xdg.portal.xdgOpenUsePortal = true;
 
+        programs.kdeconnect.enable = true;
+
+        programs.firefox.enable = true;
+
+        services.logind.settings.Login.HandleLidSwitch = "ignore";
+
+        systemd.user.services.htpc-hdmi-audio = {
+          description = "Route audio to the HDMI (TV) output";
+          wantedBy = ["default.target"];
+          after = ["pipewire.service" "wireplumber.service"];
+          path = [pkgs.pulseaudio];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+          };
+          script = ''
+            for i in $(seq 1 10); do
+              pactl set-card-profile alsa_card.pci-0000_00_1b.0 output:hdmi-stereo && break
+              sleep 1
+            done
+            pactl set-default-sink alsa_output.pci-0000_00_1b.0.hdmi-stereo || true
+          '';
+        };
+
+        environment.etc."xdg/autostart/htpc-disable-edp.desktop".text = ''
+          [Desktop Entry]
+          Type=Application
+          Name=Disable internal panel
+          Exec=kscreen-doctor output.eDP-1 disable
+          X-KDE-autostart-after=panel
+        '';
+
+        environment.etc."xdg/mpv/mpv.conf".text = ''
+          hwdec=auto-safe
+        '';
+
         environment = {
           sessionVariables = {
-            LIBVA_DRIVER_NAME = "iHD";
+            LIBVA_DRIVER_NAME = "i965";
             NIXOS_OZONE_WL = "1";
+            MOZ_ENABLE_WAYLAND = "1";
           };
 
           systemPackages = with pkgs; [

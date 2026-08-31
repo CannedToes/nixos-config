@@ -1,0 +1,17 @@
+services:
+  profilarr:
+    image: ghcr.io/dictionarry-hub/profilarr:latest
+    container_name: profilarr
+    restart: unless-stopped
+    ports:
+      - "6868:6868"
+    volumes:
+      - ./var/lib/profilarr/config:/config
+    environment:
+      - PUID=1000
+      - PGID=100
+      - UMASK=022
+      - TZ=Africa/Johannesburg
+    depends_on:
+      parser:
+        condition: service_healthy

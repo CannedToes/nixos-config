@@ -22,10 +22,7 @@
       inputs.nixos-wsl.nixosModules.default
 
       # -- host configuration --
-      ({
-        lib,
-        ...
-      }: {
+      ({lib, ...}: {
         sops.defaultSopsFile = ./secrets.yaml;
 
         networking.hostName = "wsl";
@@ -48,8 +45,9 @@
           enable = true;
           defaultUser = "myles";
           startMenuLaunchers = false;
+          interop.includePath = false;
           wslConf = {
-            network.generateResolvConf = true;
+            automount.enabled = false;
           };
         };
       })

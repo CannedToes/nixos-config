@@ -12,11 +12,8 @@
       ./_disko.nix
 
       # -- system --
-      kernel
       locale
       networking
-      nix
-      users
       zram
 
       # -- hardware --
@@ -25,7 +22,6 @@
       # -- desktop --
       audio
       bluetooth
-      fonts
       plasmaBigscreen
 
       # -- host-specific settings --

@@ -27,26 +27,17 @@ in {
       # -- desktop --
       audio
       bluetooth
-      calculator
-      creative
-      desktopPortal
-      fileManager
-      firefox
-      zen
       fonts
       gaming
+      gnome
       media
-      netbeans
-      session
-      sway
-      theming
-      viewers
+      zen
+      waydroid
 
       # -- programs --
       cli
       dev
       emacs
-      neovim
 
       # -- services --
       avahi

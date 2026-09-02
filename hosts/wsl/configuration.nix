@@ -48,6 +48,7 @@
           interop.includePath = false;
           wslConf = {
             automount.enabled = false;
+            interop.appendWindowsPath = false;
           };
         };
       })

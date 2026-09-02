@@ -12,6 +12,7 @@
       ./_disko.nix
 
       # -- system --
+      kernel
       locale
       networking
       zram

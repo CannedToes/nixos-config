@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.nixosModules.waydroid = { pkgs, ... }: {
+{...}: {
+  flake.nixosModules.waydroid = {pkgs, ...}: {
     virtualisation.waydroid.enable = true;
     virtualisation.waydroid.package = pkgs.waydroid-nftables;
 
@@ -9,8 +9,8 @@
     ];
 
     systemd = {
-      packages = [ pkgs.waydroid-helper ];
-      services.waydroid-mount.wantedBy = [ "multi-user.target" ];
+      packages = [pkgs.waydroid-helper];
+      services.waydroid-mount.wantedBy = ["multi-user.target"];
     };
 
     services.geoclue2.enable = true;

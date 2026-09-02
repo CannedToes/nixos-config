@@ -25,10 +25,7 @@
       plasmaBigscreen
 
       # -- host-specific settings --
-      ({
-        pkgs,
-        ...
-      }: {
+      ({pkgs, ...}: {
         hardware.facter.reportPath = ./facter.json;
         networking.hostName = "htpc";
         networking.networkmanager.enable = true;

@@ -1,5 +1,9 @@
-{ ... }: {
-  flake.nixosModules.gnome = { lib, pkgs, ... }: {
+{...}: {
+  flake.nixosModules.gnome = {
+    lib,
+    pkgs,
+    ...
+  }: {
     services = {
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
@@ -32,7 +36,6 @@
     programs.dconf.profiles.user.databases = [
       {
         settings = {
-
           "org/gnome/desktop/interface" = {
             accent-color = "purple";
             color-scheme = "prefer-dark";
@@ -49,7 +52,7 @@
           "org/gnome/mutter" = {
             edge-tiling = true;
             dynamic-workspaces = true;
-            experimental-features = [ "scale-monitor-framebuffer" ];
+            experimental-features = ["scale-monitor-framebuffer"];
           };
 
           "org/gnome/nautilus/preferences" = {
@@ -65,7 +68,6 @@
               pkgs.gnomeExtensions.vitals.extensionUuid
             ];
           };
-
         };
       }
     ];
@@ -76,6 +78,5 @@
       platformTheme = "gnome";
       style = "adwaita-dark";
     };
-
   };
 }

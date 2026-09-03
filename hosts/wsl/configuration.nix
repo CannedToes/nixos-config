@@ -35,12 +35,6 @@
 
         hardware.graphics.enable = lib.mkForce false;
 
-        systemd.network.enable = false;
-        systemd.services.systemd-resolved.enable = false;
-        systemd.services.systemd-udevd.enable = false;
-        systemd.services.systemd-udev-trigger.enable = false;
-        services.udev.enable = false;
-
         wsl = {
           enable = true;
           defaultUser = "myles";
@@ -55,7 +49,4 @@
     ];
   };
 
-  perSystem = {...}: {
-    packages.wsl = self.nixosConfigurations.wsl.config.system.build.toplevel;
-  };
 }

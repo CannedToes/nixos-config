@@ -15,7 +15,6 @@
       jq
       ncdu
       ripgrep
-      starship
       tealdeer
       wget
       zoxide

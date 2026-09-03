@@ -33,6 +33,7 @@ in {
       media
       zen
       waydroid
+      waydroidAtv
 
       # -- programs --
       cli

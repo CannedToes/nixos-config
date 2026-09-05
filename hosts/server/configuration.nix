@@ -30,9 +30,9 @@ in {
       ddclient
       flaresolverr
       homeAssistant
-      jellyfin
       mealie
       navidrome
+      nixflix
       nginx
       ntfy
       vaultwarden
@@ -51,11 +51,6 @@ in {
         hardware.graphics.extraPackages = [
           pkgs.intel-media-driver
           pkgs.vpl-gpu-rt
-        ];
-
-        users.users.jellyfin.extraGroups = [
-          "render"
-          "video"
         ];
 
         networking = {

@@ -13,13 +13,13 @@
 
     programs.bash = {
       enable = true;
+      promptInit = ''PS1="\[\e[38;5;135m\]\u\[\e[38;5;247;2m\]@\[\e[0;38;5;197m\]\h\[\e[38;5;75m\] \[\e[38;5;255m\]\w\[\e[0m\] \[\e[38;5;112m\]\$\[\e[0m\] "'';
     };
 
-    environment.systemPackages = [ pkgs.helix ];
+    environment.systemPackages = [pkgs.helix];
 
     environment.sessionVariables = {
       EDITOR = "hx";
-      PAGER = "delta";
       VISUAL = "hx";
     };
   };
